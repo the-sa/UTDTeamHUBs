@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_unpaired"
     android:layout_width="match_parent"
@@ -10,9 +11,46 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.teamhub.utd.hub.UnPairedActivity">
 
-    <ListView
+    <TextView
+        android:id="@+id/paired_devices"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:text="@string/paired_devices" />
+    <!-- android:background="#666"
+        android:textColor="#fff" -->
+
+    <ListView
+        android:id="@+id/list_paired_bluetooth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/paired_devices"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/unpaired_devices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list_paired_bluetooth"
+        android:text="@string/unpaired_devices"/>
+
+    <!-- android:background="#666"
+        android:textColor="#fff" -->
+
+    <ListView
+        android:id="@+id/list_unpaired_bluetooth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/unpaired_devices"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/searchDevicesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@android:drawable/ic_search_category_default" />
+
 </RelativeLayout>
