@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class HomeActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     // create variables
     FloatingActionButton button;
@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(HomeActivity.this, UnPairedActivity.class);
+                Intent i = new Intent(MainActivity.this, UnPairedActivity.class);
                 startActivity(i);
             }
         });
