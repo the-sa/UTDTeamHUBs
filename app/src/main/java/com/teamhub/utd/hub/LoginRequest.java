@@ -14,9 +14,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class LoginRequest extends StringRequest {
-    private static final String LOGIN_REQUEST_URL = "jdbc:sqlite:c://sqlite/db/test.db";
+    private static final String LOGIN_REQUEST_URL = "jdbc:sqlite:c://sqlite/db/RMDB.db";
 
-
+// //data/data/<Your-Application-Package-Name>/databases/<your-database-name>
 
     public LoginRequest(String username, String password, Response.Listener<String> listener) {
         super(Method.POST, LOGIN_REQUEST_URL, listener, null);
@@ -32,7 +32,7 @@ public class LoginRequest extends StringRequest {
          */
         private Connection connect() {
             // SQLite connection string
-            String url = "jdbc:sqlite:C://data/data/RMDB.db";
+            String url = "jdbc:sqlite:C://sqlite/db/RMDB.db";
             Connection conn = null;
             try {
                 conn = DriverManager.getConnection(url);
