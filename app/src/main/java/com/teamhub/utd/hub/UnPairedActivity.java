@@ -212,7 +212,7 @@ public class UnPairedActivity extends AppCompatActivity {
 
             IntentFilter BTIntent2 = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
             registerReceiver(mReceiver, BTIntent2);
-        }
+        } 
         */
     }
 }
