@@ -1,6 +1,7 @@
 package com.teamhub.utd.hub;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
-    RegisterRequest myDb;
+    DBHandler myDb;
     EditText editName, editUsername, editPassword;
     Button bRegister;
 
@@ -26,7 +27,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        myDb = new RegisterRequest(this);
+        Context context = getApplicationContext();
+        myDb = new DBHandler(context);
 
         editName = (EditText) findViewById(R.id.editName);
         editUsername = (EditText) findViewById(R.id.editUsername);
@@ -84,8 +86,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View v) {
-                        boolean isInserted = myDb.insertData(editName.getText().toString(), editUsername.getText().toString(), editPassword.getText().toString());
-                        if(isInserted = true) {
+                        boolean isInserted = myDb.addUser(editName.getText().toString(), editUsername.getText().toString(), editPassword.getText().toString());
+                        if(isInserted == true) {
                             Toast.makeText(RegisterActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             RegisterActivity.this.startActivity(intent);

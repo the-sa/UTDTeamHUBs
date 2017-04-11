@@ -1,5 +1,6 @@
 package com.teamhub.utd.hub;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,9 +20,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE User_Table ( ID INTEGER PRIMARY KEY, Name TEXT, Username TEXT, " +
+        String CREATE_USER_TABLE = "CREATE TABLE User_Table ( ID INTEGER PRIMARY KEY, Name TEXT, Username TEXT, " +
                 "Password TEXT )";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+        db.execSQL(CREATE_USER_TABLE);
     }
 
     @Override
@@ -43,5 +44,23 @@ public class DBHandler extends SQLiteOpenHelper {
             password = cursor.getString(id);
         }
         return password;
+    }
+
+    // add one user info to database
+    public Boolean addUser (String name, String username, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("NAME", name);
+        contentValues.put("USERNAME", username);
+        contentValues.put("PASSWORD", password);
+        long result = db.insert("User_Table", null, contentValues);
+        if(result == -1)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }

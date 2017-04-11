@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 public class  LoginActivity extends AppCompatActivity {
 
-    LoginRequest loginRequest;
     DBHandler db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +50,7 @@ public class  LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
-                    // if the user is not found in database or if password do not match 
+                    // if the user is not found in database or if password do not match
                     Toast.makeText(LoginActivity.this, "Incorrect username or password", Toast.LENGTH_LONG).show();
                 }
 
