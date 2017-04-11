@@ -1,5 +1,6 @@
 package com.teamhub.utd.hub;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,19 +9,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class  LoginActivity extends AppCompatActivity {
 
     LoginRequest loginRequest;
+    DBHandler db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Context context = getApplicationContext();
 
         final EditText etUsername = (EditText) findViewById(R.id.editUsername);
         final EditText etPassword = (EditText) findViewById(R.id.editPassword);
         final TextView tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
         final Button bLogin = (Button) findViewById(R.id.bSignIn);
+        db = new DBHandler(context);
 
         tvRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,10 +38,24 @@ public class  LoginActivity extends AppCompatActivity {
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // get username and password from textedit
                 final String username = etUsername.getText().toString();
                 final String password = etPassword.getText().toString();
 
-                System.out.println("A");
+                // check if the user exist and get password from database
+                String dbPassword = db.readUserPassword(username);
+                // check if password from database is equal to password from user
+                if ((dbPassword != null) && (dbPassword.equals(password))) {
+                    Log.e("This: ", dbPassword);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    // if the user is not found in database or if password do not match 
+                    Toast.makeText(LoginActivity.this, "Incorrect username or password", Toast.LENGTH_LONG).show();
+                }
+
+                /*System.out.println("A");
                 Log.e("Tag", "A");
 
                 //checks to see login is in db
@@ -55,7 +74,7 @@ public class  LoginActivity extends AppCompatActivity {
                             .setNegativeButton("Retry", null)
                             .create()
                             .show();
-                }
+                }*/
 
             }
         });
