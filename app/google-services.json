@@ -5,6 +5,10 @@
     "project_id": "bluetooth-management",
     "storage_bucket": "bluetooth-management.appspot.com"
   },
+  "rules": {
+    ".read": true,
+    ".write": true
+  },
   "client": [
     {
       "client_info": {
