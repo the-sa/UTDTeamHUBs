@@ -20,8 +20,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_USER_TABLE = "CREATE TABLE User_Table ( ID INTEGER PRIMARY KEY, Name TEXT, Username TEXT, " +
-                "Password TEXT )";
+        String CREATE_USER_TABLE = "CREATE TABLE User_Table ( ID INTEGER PRIMARY KEY, NAME TEXT, USERNAME TEXT, " +
+                "PASSWORD TEXT )";
         db.execSQL(CREATE_USER_TABLE);
     }
 
@@ -47,13 +47,19 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // add one user info to database
-    public void addUser (String name, String username, String password) {
+    public Boolean addUser (String name, String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("NAME", name);
         contentValues.put("USERNAME", username);
         contentValues.put("PASSWORD", password);
-        db.insert("User_Table", null, contentValues);
+        long result = db.insert("User_Table", null, contentValues);
         db.close();
+        if (result == -1) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
