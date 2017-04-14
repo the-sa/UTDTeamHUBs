@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "267059735732",
+    "firebase_url": "https://bluetooth-management.firebaseio.com",
+    "project_id": "bluetooth-management",
+    "storage_bucket": "bluetooth-management.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267059735732:android:5755145e29a8afab",
+        "android_client_info": {
+          "package_name": "com.teamhub.utd.hub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "267059735732-r5rr28ednhp134keh0d9l2fhh1idb8gu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-sr_cozkR8qW8yDlaIjSa3rHOS3UL7CU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
