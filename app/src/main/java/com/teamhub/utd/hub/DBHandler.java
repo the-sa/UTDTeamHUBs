@@ -47,20 +47,13 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // add one user info to database
-    public Boolean addUser (String name, String username, String password) {
+    public void addUser (String name, String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("NAME", name);
         contentValues.put("USERNAME", username);
         contentValues.put("PASSWORD", password);
-        long result = db.insert("User_Table", null, contentValues);
+        db.insert("User_Table", null, contentValues);
         db.close();
-        if(result == -1)
-        {
-            return false;
-        }
-        else {
-            return true;
-        }
     }
 }

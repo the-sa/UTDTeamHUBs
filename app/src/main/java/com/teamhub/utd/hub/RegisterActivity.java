@@ -86,16 +86,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View v) {
-                        boolean isInserted = myDb.addUser(editName.getText().toString(), editUsername.getText().toString(), editPassword.getText().toString());
-                        if(isInserted == true) {
-                            Toast.makeText(RegisterActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            RegisterActivity.this.startActivity(intent);
-                        }
-                        else
-                        {
-                            Toast.makeText(RegisterActivity.this, "Data not Inserted", Toast.LENGTH_LONG).show();
-                        }
+                        myDb.addUser(editName.getText().toString(), editUsername.getText().toString(), editPassword.getText().toString());
+                        Toast.makeText(RegisterActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                        RegisterActivity.this.startActivity(intent);
                     }
                 }
 
