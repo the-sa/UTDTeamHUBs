@@ -1,6 +1,4 @@
 package com.teamhub.utd.hub;
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,13 +16,12 @@ public class  LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Context context = getApplicationContext();
 
         final EditText etUsername = (EditText) findViewById(R.id.editUsername);
         final EditText etPassword = (EditText) findViewById(R.id.editPassword);
         final TextView tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
         final Button bLogin = (Button) findViewById(R.id.bSignIn);
-        db = new DBHandler(context);
+        db = new DBHandler(this);
 
         tvRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override
