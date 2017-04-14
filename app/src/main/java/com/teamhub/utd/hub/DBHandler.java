@@ -54,12 +54,12 @@ public class DBHandler extends SQLiteOpenHelper {
         contentValues.put("USERNAME", username);
         contentValues.put("PASSWORD", password);
         long result = db.insert("User_Table", null, contentValues);
+        db.close();
         if(result == -1)
         {
             return false;
         }
-        else
-        {
+        else {
             return true;
         }
     }
