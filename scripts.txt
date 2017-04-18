@@ -1,0 +1,4 @@
+Scripts needed:
+
+check devices battery level
+update battery level for device
