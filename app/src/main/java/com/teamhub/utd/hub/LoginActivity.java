@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -50,15 +51,13 @@ public class LoginActivity extends AppCompatActivity {
                             boolean success = jsonResponse.getBoolean("success");
 
                             if (success) {
-                                String name = jsonResponse.getString("name");
-                                int age = jsonResponse.getInt("age");
 
-                                Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
-                                intent.putExtra("name", name);
-                                intent.putExtra("age", age);
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("username", username);
                                 LoginActivity.this.startActivity(intent);
                             } else {
+                                Toast.makeText(LoginActivity.this, "Username or password is incorrect",
+                                        Toast.LENGTH_LONG).show();
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                 builder.setMessage("Login Failed")
                                         .setNegativeButton("Retry", null)
