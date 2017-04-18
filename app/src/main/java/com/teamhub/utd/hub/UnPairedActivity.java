@@ -1,6 +1,6 @@
 package com.teamhub.utd.hub;
 
-import android.app.Activity;
+
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -10,17 +10,14 @@ import android.content.IntentFilter;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 /*
@@ -32,8 +29,12 @@ the field
 
 public class UnPairedActivity extends AppCompatActivity {
 
+    private final static String unpaired = "UNPAIRED_DEVICE";
+    BluetoothDevice currentDevice;
     BluetoothAdapter bluetoothAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
+    //for Bluetooth
+    private ArrayList<BluetoothDevice> bluetoothDeviceArrayList = new ArrayList<BluetoothDevice>();
 
 
     /*Reference for action bar buttons. Not appropriate for scan since it's not
@@ -60,12 +61,42 @@ public class UnPairedActivity extends AppCompatActivity {
 
             String info = ((TextView)view).getText().toString();
             String address = info.substring(info.length()-17);
+            String name = info.substring(0,info.length()-18);
 
 
-            Intent intent = new Intent();
-            intent.putExtra("MACADDRESS", address);
+            for (int a = 0; a< bluetoothDeviceArrayList.size(); a++)
+            {
+                //Log.d("TEST", name+name.length()+" gap "+bluetoothDeviceArrayList.get(a).getName()+bluetoothDeviceArrayList.get(a).getName().length());
+                if(address.equals(bluetoothDeviceArrayList.get(a).getAddress()))
+                {
 
-            setResult(Activity.RESULT_OK, intent);
+                    Log.d("Test", bluetoothDeviceArrayList.get(a).getName());
+
+                    currentDevice = bluetoothDeviceArrayList.get(a);
+
+
+
+                }
+
+                else
+                {
+                    Log.d("not found", "");
+                }
+
+            }
+
+
+
+            Intent intent = new Intent(UnPairedActivity.this, DeviceDetailActivity.class);
+
+            Bundle b = new Bundle();
+
+            b.putParcelable(unpaired, currentDevice);
+            intent.putExtras(b);
+            startActivity(intent);
+            //intent.putExtra("MACADDRESS", address);
+
+            //setResult(Activity.RESULT_OK, intent);
             finish();
         }
     };
@@ -87,6 +118,7 @@ public class UnPairedActivity extends AppCompatActivity {
 
                     Log.i("Mac address:", deviceHardwareAddress + " " + deviceName);
                     mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress);
+                    bluetoothDeviceArrayList.add(device);
                 }
             }
             else{
@@ -180,11 +212,18 @@ public class UnPairedActivity extends AppCompatActivity {
         if (pairedDevices.size() > 0) {
             findViewById(R.id.paired_devices).setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
-                pairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                if(device != null) {
+                    bluetoothDeviceArrayList.add(device);
+                    pairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                }
+
+
             }
         } else {
             String noDevices = getResources().getText(R.string.no_devices).toString();
             pairedDevicesArrayAdapter.add(noDevices);
+
+
         }
 
     }
@@ -212,7 +251,7 @@ public class UnPairedActivity extends AppCompatActivity {
 
             IntentFilter BTIntent2 = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
             registerReceiver(mReceiver, BTIntent2);
-        } 
+        }
         */
     }
 }
