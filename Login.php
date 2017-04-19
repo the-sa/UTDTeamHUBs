@@ -29,8 +29,3 @@
     echo json_encode($response);
     $con->close();
 ?>
-/*Return response and end script
-    exit(json_encode([
-    "Message" => "UserEvent relationship was added to the database and the temp user was marked as Attended.",
-    "Success" => true
-    ]));*/

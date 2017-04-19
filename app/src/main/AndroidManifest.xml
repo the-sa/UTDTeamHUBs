@@ -32,7 +32,6 @@
             android:name=".RegisterActivity"
             android:label="RegisterActivity"
             android:theme="@style/AppTheme"/>
-        <activity android:name=".UserAreaActivity"></activity>
     </application>
 
 </manifest>

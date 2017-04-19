@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,13 +52,19 @@ public class LoginActivity extends AppCompatActivity {
                             boolean success = jsonResponse.getBoolean("success");
 
                             if (success) {
-
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("username", username);
-                                LoginActivity.this.startActivity(intent);
+                                String usernameReturned = jsonResponse.getString("username");
+                                String passwordReturned = jsonResponse.getString("password");
+                                Log.e("username", usernameReturned);
+                                Log.e("password", passwordReturned);
+                                if ((usernameReturned.contentEquals(username)) && (passwordReturned.equals(password))){
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    LoginActivity.this.startActivity(intent);
+                                }
+                                else {
+                                    Toast.makeText(LoginActivity.this, "Username or password is incorrect",Toast.LENGTH_LONG).show();
+                                }
                             } else {
-                                Toast.makeText(LoginActivity.this, "Username or password is incorrect",
-                                        Toast.LENGTH_LONG).show();
+
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                 builder.setMessage("Login Failed")
                                         .setNegativeButton("Retry", null)
