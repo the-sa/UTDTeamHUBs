@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (success) {
                                 Toast.makeText(RegisterActivity.this, "Data registered",
                                         Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                Intent intent = new Intent(RegisterActivity.this, AdminActivity.class);
                                 RegisterActivity.this.startActivity(intent);
                             } else {
                                 Toast.makeText(RegisterActivity.this, "Data registration failure",

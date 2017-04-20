@@ -28,6 +28,10 @@
             android:name=".RegisterActivity"
             android:label="RegisterActivity"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".AdminActivity"
+            android:label="Admin Database"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
