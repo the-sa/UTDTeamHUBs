@@ -110,14 +110,15 @@ public class UnPairedActivity extends AppCompatActivity {
                 // object and its info from the Intent.
 
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
+                int RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
                 //skip if it's already paired
                 if(device.getBondState() != BluetoothDevice.BOND_BONDED) {
                     String deviceName = device.getName();
                     String deviceHardwareAddress = device.getAddress(); // MAC address
+                    String signalStr = String.valueOf(RSSI);
 
                     Log.i("Mac address:", deviceHardwareAddress + " " + deviceName);
-                    mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress);
+                    mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + signalStr);
                     bluetoothDeviceArrayList.add(device);
                 }
             }
