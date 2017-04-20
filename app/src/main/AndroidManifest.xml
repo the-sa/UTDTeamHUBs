@@ -25,10 +25,6 @@
             android:label="UnPairedActivity"
             android:theme="@style/AppTheme"/>
         <activity
-            android:name=".MainActivity"
-            android:label="MainActivity"
-            android:theme="@style/AppTheme"/>
-        <activity
             android:name=".RegisterActivity"
             android:label="RegisterActivity"
             android:theme="@style/AppTheme"/>
