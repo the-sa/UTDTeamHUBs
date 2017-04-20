@@ -46,11 +46,22 @@ public class LoginActivity extends AppCompatActivity {
                             if (success) {
                                 String usernameReturned = jsonResponse.getString("username");
                                 String passwordReturned = jsonResponse.getString("password");
+                                String roleReturned = jsonResponse.getString("role");
+                                String idReturned = jsonResponse.getString("id");
                                 Log.e("username", usernameReturned);
                                 Log.e("password", passwordReturned);
+                                Log.e("id", idReturned);
+                                Log.e("role", roleReturned);
                                 if ((usernameReturned.contentEquals(username)) && (passwordReturned.equals(password))){
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    LoginActivity.this.startActivity(intent);
+                                    if(roleReturned == "1"){
+                                        Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                                        LoginActivity.this.startActivity(intent);
+                                    }
+                                    else{
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        LoginActivity.this.startActivity(intent);
+                                    }
+
                                 }
                                 else {
                                     Toast.makeText(LoginActivity.this, "Username or password is incorrect",Toast.LENGTH_LONG).show();

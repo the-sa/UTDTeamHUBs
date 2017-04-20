@@ -22,15 +22,19 @@
         </activity>
         <activity
             android:name=".UnPairedActivity"
-            android:label="UnPairedActivity"
+            android:label="Bluetooth Devices"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".MainActivity"
+            android:label="User Dashboard"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".RegisterActivity"
-            android:label="RegisterActivity"
+            android:label="Add New User"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".AdminActivity"
-            android:label="Admin Database"
+            android:label="Admin Dashboard"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

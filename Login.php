@@ -24,6 +24,7 @@
         $response["success"] = true;
         $response["username"] = $username;
         $response["password"] = $password;
+        $response["role"] = $role;
     }
 
     echo json_encode($response);
