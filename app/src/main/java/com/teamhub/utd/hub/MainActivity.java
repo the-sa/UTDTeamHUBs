@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         // button to do something
         button = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
 
-
         //button listener
         button.setOnClickListener(new View.OnClickListener() {
             @Override
