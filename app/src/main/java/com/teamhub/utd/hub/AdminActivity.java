@@ -185,10 +185,10 @@ public class AdminActivity extends AppCompatActivity {
                 // button to do something
                 FloatingActionButton button = (FloatingActionButton)rootView.findViewById(R.id.addUserButton);
                 // list view to do something
-                ListView view = (ListView)rootView.findViewById(R.id.deviceList);
+                ListView view = (ListView)rootView.findViewById(R.id.userList);
 
                 // make a list of user
-                ArrayList<User> users = new ArrayList<User>();
+                final ArrayList<User> users = new ArrayList<User>();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -205,7 +205,9 @@ public class AdminActivity extends AppCompatActivity {
                                     User user = new User();
                                     user.setId(array.getJSONObject(i).getInt("id"));
                                     user.setUsername(array.getJSONObject(i).getString("username"));
-
+                                    user.setPassword(array.getJSONObject(i).getString("password"));
+                                    user.setRole(array.getJSONObject(i).getInt("role"));
+                                    users.add(user);
                                 }
                             }
                         } catch (JSONException e) {
@@ -215,7 +217,7 @@ public class AdminActivity extends AppCompatActivity {
                 };
 
                 // call request
-                PopulateDevicesRequest loginRequest = new PopulateDevicesRequest(responseListener);
+                PopulateUsersRequest loginRequest = new PopulateUsersRequest(responseListener);
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
                 queue.add(loginRequest);
 
@@ -228,6 +230,10 @@ public class AdminActivity extends AppCompatActivity {
                         startActivity(i);
                     }
                 });
+
+                // array adapter
+                ArrayAdapter <User> usersArrayAdapter = new ArrayAdapter<User>(getActivity(), android.R.layout.simple_list_item_1, users);
+                view.setAdapter(usersArrayAdapter);
             }
 
             return rootView;
