@@ -43,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             try {
-                                if((username.length() != 0) && (password.length() != 0)){
+
                                     JSONObject jsonResponse = new JSONObject(response);
                                     boolean success = jsonResponse.getBoolean("success");
                                     if (success) {
@@ -60,11 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
                                                 .create()
                                                 .show();
                                     }
-                                }
-                                else{
-                                    Toast.makeText(RegisterActivity.this, "Username and Password must have a value",
-                                            Toast.LENGTH_LONG).show();
-                                }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -74,10 +69,16 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
+                if((username.length() != 0) && (password.length() != 0)){
+                    RegisterRequest registerRequest = new RegisterRequest(username, password, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
+                    queue.add(registerRequest);
+                }
+                else{
+                    Toast.makeText(RegisterActivity.this, "Username and Password must have a value",
+                            Toast.LENGTH_LONG).show();
+                }
 
-                RegisterRequest registerRequest = new RegisterRequest(username, password, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-                queue.add(registerRequest);
             }
         });
     }
