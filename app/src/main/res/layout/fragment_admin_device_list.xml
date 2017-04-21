@@ -3,14 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_admin_device_list"
     tools:context="com.teamhub.utd.hub.AdminDeviceList">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is Device Fragment" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addButton"
@@ -19,5 +13,10 @@
         android:layout_gravity="end|top"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/deviceList"/>
 
 </FrameLayout>

@@ -12,14 +12,27 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class AdminActivity extends AppCompatActivity {
 
@@ -115,6 +128,44 @@ public class AdminActivity extends AppCompatActivity {
                 rootView = inflater.inflate(R.layout.fragment_admin_device_list, container, false);
                 // button to do something
                 FloatingActionButton button = (FloatingActionButton)rootView.findViewById(R.id.addButton);
+                // list view to do something
+                ListView view = (ListView)rootView.findViewById(R.id.deviceList);
+
+                // array list to store device data
+                final ArrayList<Devices> devices = new ArrayList<Devices>();
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONObject jsonResponse = null;
+                        boolean success;
+                        try {
+                            jsonResponse = new JSONObject(response);
+                            //success = jsonResponse.getBoolean("result");
+
+                            if (true) {
+                                JSONArray array = jsonResponse.getJSONArray("result");
+                                for (int i = 0; i < array.length(); i++) {
+                                    Devices device = new Devices();
+                                    device.setId(array.getJSONObject(i).getInt("id"));
+                                    device.setName(array.getJSONObject(i).getString("device_name"));
+                                    device.setMacaddress(array.getJSONObject(i).getString("mac_address"));
+                                    device.setBatteryLife(array.getJSONObject(i).getInt("battery_level"));
+                                    device.setUserID(array.getJSONObject(i).getInt("user_id"));
+                                    devices.add(device);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                // call request
+                PopulateDevicesRequest loginRequest = new PopulateDevicesRequest(responseListener);
+                RequestQueue queue = Volley.newRequestQueue(getActivity());
+                queue.add(loginRequest);
+
 
                 //button listener
                 button.setOnClickListener(new View.OnClickListener() {
@@ -125,10 +176,49 @@ public class AdminActivity extends AppCompatActivity {
                     }
                 });
 
+                // array adapter
+                ArrayAdapter <Devices> devicesArrayAdapter = new ArrayAdapter<Devices>(getActivity(), android.R.layout.simple_list_item_1, devices);
+                view.setAdapter(devicesArrayAdapter);
+
             } else  if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
                 rootView = inflater.inflate(R.layout.fragment_admin_user_list, container, false);
                 // button to do something
                 FloatingActionButton button = (FloatingActionButton)rootView.findViewById(R.id.addUserButton);
+                // list view to do something
+                ListView view = (ListView)rootView.findViewById(R.id.deviceList);
+
+                // make a list of user
+                ArrayList<User> users = new ArrayList<User>();
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONObject jsonResponse = null;
+                        boolean success;
+                        try {
+                            jsonResponse = new JSONObject(response);
+                            //success = jsonResponse.getBoolean("result");
+
+                            if (true) {
+                                JSONArray array = jsonResponse.getJSONArray("result");
+                                for (int i = 0; i < array.length(); i++) {
+                                    User user = new User();
+                                    user.setId(array.getJSONObject(i).getInt("id"));
+                                    user.setUsername(array.getJSONObject(i).getString("username"));
+
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                // call request
+                PopulateDevicesRequest loginRequest = new PopulateDevicesRequest(responseListener);
+                RequestQueue queue = Volley.newRequestQueue(getActivity());
+                queue.add(loginRequest);
+
 
                 //button listener
                 button.setOnClickListener(new View.OnClickListener() {

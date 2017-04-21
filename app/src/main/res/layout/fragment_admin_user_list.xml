@@ -6,10 +6,6 @@
     tools:context="com.teamhub.utd.hub.AdminUserList">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is the user fragment" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addUserButton"
@@ -18,5 +14,10 @@
         android:layout_gravity="end|top"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/userList"/>
 
 </FrameLayout>
