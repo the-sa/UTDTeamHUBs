@@ -39,31 +39,41 @@ public class RegisterActivity extends AppCompatActivity {
                 //    final int age = Integer.parseInt(etAge.getText().toString());
                 final String password = etPassword.getText().toString();
 
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if (success) {
-                                Toast.makeText(RegisterActivity.this, "Data registered",
-                                        Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(RegisterActivity.this, AdminActivity.class);
-                                RegisterActivity.this.startActivity(intent);
-                            } else {
-                                Toast.makeText(RegisterActivity.this, "Data registration failure",
-                                        Toast.LENGTH_LONG).show();
-                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                builder.setMessage("Register Failed")
-                                        .setNegativeButton("Retry", null)
-                                        .create()
-                                        .show();
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                if((username.length() != 0) && (password.length() != 0)){
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    boolean success = jsonResponse.getBoolean("success");
+                                    if (success) {
+                                        Toast.makeText(RegisterActivity.this, "Data registered",
+                                                Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(RegisterActivity.this, AdminActivity.class);
+                                        RegisterActivity.this.startActivity(intent);
+                                    } else {
+                                        Toast.makeText(RegisterActivity.this, "Data registration failure",
+                                                Toast.LENGTH_LONG).show();
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                        builder.setMessage("Register Failed")
+                                                .setNegativeButton("Retry", null)
+                                                .create()
+                                                .show();
+                                    }
+                                }
+                                else{
+                                    Toast.makeText(RegisterActivity.this, "Username and Password must have a value",
+                                            Toast.LENGTH_LONG).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
-                };
+                    };
+
+
+
 
                 RegisterRequest registerRequest = new RegisterRequest(username, password, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
