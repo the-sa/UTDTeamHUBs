@@ -2,10 +2,10 @@ package com.teamhub.utd.hub;
 
 
 public class User {
-    int id, role;
-    String username, password;
+    int id;
+    String username, password, role;
 
-    public void User (int i, String u, String p, int r){
+    public void User (int i, String u, String p, String r){
         id = i;
         username = u;
         password = p;
@@ -20,12 +20,18 @@ public class User {
         this.id = id;
     }
 
-    public int getRole() {
+    public String getRole() {
         return role;
     }
 
     public void setRole(int role) {
-        this.role = role;
+        if (role == 0) {
+            this.role = "normal";
+        } else if (role == 1) {
+            this.role = "admin";
+        } else {
+            this.role = "nothing";
+        }
     }
 
     public String getUsername() {
