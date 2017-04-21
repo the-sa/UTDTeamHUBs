@@ -115,10 +115,20 @@ public class UnPairedActivity extends AppCompatActivity {
                 if(device.getBondState() != BluetoothDevice.BOND_BONDED) {
                     String deviceName = device.getName();
                     String deviceHardwareAddress = device.getAddress(); // MAC address
-                    String signalStr = String.valueOf(RSSI);
 
                     Log.i("Mac address:", deviceHardwareAddress + " " + deviceName);
-                    mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + signalStr);
+                    //RSSI SIGNAL STRENGTH INFO//
+                    if (RSSI >= -75 )
+                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: EXCELLENT");}
+                    if (RSSI <= -70 && RSSI >= -85 )
+                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: GOOD");}
+                    if (RSSI <=-86 && RSSI>= -100 )
+                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: FAIR");}
+                    if (RSSI <= -100 && RSSI > -110 )
+                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: POOR");}
+                    if (RSSI <= -110 )
+                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: NO SIGNAL");}
+
                     bluetoothDeviceArrayList.add(device);
                 }
             }
