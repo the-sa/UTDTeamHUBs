@@ -51,6 +51,6 @@ public class User {
     }
 
     public String toString () {
-        return username + "         role: " + role;
+        return username + "          role: " + role;
     }
 }
