@@ -46,14 +46,14 @@ public class LoginActivity extends AppCompatActivity {
                             if (success) {
                                 String usernameReturned = jsonResponse.getString("username");
                                 String passwordReturned = jsonResponse.getString("password");
-                                String roleReturned = jsonResponse.getString("role");
+                                Integer roleReturned = jsonResponse.getInt("role");
                                 String idReturned = jsonResponse.getString("id");
                                 Log.e("username", usernameReturned);
                                 Log.e("password", passwordReturned);
                                 Log.e("id", idReturned);
-                                Log.e("role", roleReturned);
+                                Log.e("role", roleReturned.toString());
                                 if ((usernameReturned.contentEquals(username)) && (passwordReturned.equals(password))){
-                                    if(roleReturned == "1"){
+                                    if(roleReturned == 1){
                                         Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
                                         LoginActivity.this.startActivity(intent);
                                     }
