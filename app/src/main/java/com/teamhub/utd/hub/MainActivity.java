@@ -1,10 +1,13 @@
 package com.teamhub.utd.hub;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
@@ -23,6 +26,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    ArrayAdapter<Devices> devicesArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         final ArrayList<Devices> devices = new ArrayList<Devices>();
 
         ListView list = (ListView) findViewById(R.id.deviceUserList);
+        FloatingActionButton button = (FloatingActionButton) findViewById(R.id.deviceRefrest);
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -69,9 +74,22 @@ public class MainActivity extends AppCompatActivity {
         queue.add(getDeviceUserRequest);
 
         // array adapter
-        ArrayAdapter<Devices> devicesArrayAdapter = new ArrayAdapter<Devices>(MainActivity.this, android.R.layout.simple_list_item_1, devices);
+        devicesArrayAdapter = new ArrayAdapter<Devices>(MainActivity.this, android.R.layout.simple_list_item_1, devices);
         list.setAdapter(devicesArrayAdapter);
+        list.invalidate();
 
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onResume();
+            }
+        });
+    }
+
+    @Override
+    public void onResume () {
+        super.onResume();
+        devicesArrayAdapter.notifyDataSetChanged();
 
     }
 }

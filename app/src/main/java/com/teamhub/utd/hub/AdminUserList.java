@@ -42,6 +42,10 @@ public class AdminUserList extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    ArrayAdapter<User> usersArrayAdapter;
+    // make a list of user
+    ArrayList<User> users = new ArrayList<User>();
+
     private OnFragmentInteractionListener mListener;
 
     public AdminUserList() {
@@ -76,17 +80,62 @@ public class AdminUserList extends Fragment {
     }
 
     @Override
+    public void onResume () {
+        super.onResume();
+        usersArrayAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_admin_user_list, container, false);
         // button to do something
         FloatingActionButton button = (FloatingActionButton)rootView.findViewById(R.id.addUserButton);
+        FloatingActionButton button2 = (FloatingActionButton)rootView.findViewById(R.id.userListRefresh);
         // list view to do something
         ListView view = (ListView)rootView.findViewById(R.id.userList);
 
-        // make a list of user
-        final ArrayList<User> users = new ArrayList<User>();
+        // populate list
+        populateList();
 
+        //button listener
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), RegisterActivity.class);
+                startActivity(i);
+            }
+        });
+
+        view.setAdapter(usersArrayAdapter);
+
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), EditUserActivity.class);
+                User user = (User) adapterView.getItemAtPosition(i);
+                intent.putExtra("User", user);
+                //Log.e("ClickedDevice", String.valueOf(user.id));
+                startActivity(intent);
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                users.clear();
+                populateList();
+                onResume();
+            }
+        });
+
+
+        // Inflate the layout for this fragment
+        return rootView;
+    }
+
+    // to add to the list
+    public void populateList () {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -119,33 +168,8 @@ public class AdminUserList extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         queue.add(loginRequest);
 
-
-        //button listener
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(), RegisterActivity.class);
-                startActivity(i);
-            }
-        });
-
         // array adapter
-        ArrayAdapter<User> usersArrayAdapter = new ArrayAdapter<User>(getActivity(), android.R.layout.simple_list_item_1, users);
-        view.setAdapter(usersArrayAdapter);
-
-        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), EditUserActivity.class);
-                User user = (User) adapterView.getItemAtPosition(i);
-                intent.putExtra("User", user);
-                //Log.e("ClickedDevice", String.valueOf(user.id));
-                startActivity(intent);
-            }
-        });
-
-        // Inflate the layout for this fragment
-        return rootView;
+        usersArrayAdapter = new ArrayAdapter<User>(getActivity(), android.R.layout.simple_list_item_1, users);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

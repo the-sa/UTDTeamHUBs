@@ -42,6 +42,8 @@ public class AdminDeviceList extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    ArrayAdapter<Devices> devicesArrayAdapter;
+
     private OnFragmentInteractionListener mListener;
 
     public AdminDeviceList() {
@@ -76,11 +78,18 @@ public class AdminDeviceList extends Fragment {
     }
 
     @Override
+    public void onResume () {
+        super.onResume();
+        devicesArrayAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView  = inflater.inflate(R.layout.fragment_admin_device_list, container, false);
         // button to do something
         FloatingActionButton button = (FloatingActionButton)rootView.findViewById(R.id.addButton);
+        FloatingActionButton button2 = (FloatingActionButton)rootView.findViewById(R.id.deviceListRefresh);
         // list view to do something
         ListView view = (ListView)rootView.findViewById(R.id.deviceList);
 
@@ -130,8 +139,17 @@ public class AdminDeviceList extends Fragment {
         });
 
         // array adapter
-        ArrayAdapter<Devices> devicesArrayAdapter = new ArrayAdapter<Devices>(getActivity(), android.R.layout.simple_list_item_1, devices);
+        devicesArrayAdapter = new ArrayAdapter<Devices>(getActivity(), android.R.layout.simple_list_item_1, devices);
         view.setAdapter(devicesArrayAdapter);
+
+        button2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                onResume();
+            }
+        });
+
         // Inflate the layout for this fragment
         return rootView;
     }

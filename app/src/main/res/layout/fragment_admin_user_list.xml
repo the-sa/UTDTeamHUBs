@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,13 +11,30 @@
         android:id="@+id/addUserButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
         android:layout_gravity="end|top"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        android:layout_marginEnd="11dp"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        app:srcCompat="@drawable/new_add" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/userListRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:srcCompat="@android:drawable/stat_notify_sync_noanim"
+        android:layout_below="@+id/addUserButton"
+        android:layout_alignStart="@+id/addUserButton"
+        android:layout_marginTop="17dp" />
 
     <ListView
-        android:layout_width="match_parent"
+        android:id="@+id/userList"
+        android:layout_width="276dp"
         android:layout_height="match_parent"
-        android:id="@+id/userList"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
-</FrameLayout>
+</RelativeLayout>
