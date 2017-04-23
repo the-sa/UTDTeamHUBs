@@ -43,6 +43,9 @@ public class AdminDeviceList extends Fragment {
     private String mParam2;
 
     ArrayAdapter<Devices> devicesArrayAdapter;
+    // array list to store device data
+    final ArrayList<Devices> devices = new ArrayList<Devices>();
+    ListView listView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -91,11 +94,32 @@ public class AdminDeviceList extends Fragment {
         FloatingActionButton button = (FloatingActionButton)rootView.findViewById(R.id.addButton);
         FloatingActionButton button2 = (FloatingActionButton)rootView.findViewById(R.id.deviceListRefresh);
         // list view to do something
-        ListView view = (ListView)rootView.findViewById(R.id.deviceList);
+        listView = (ListView)rootView.findViewById(R.id.deviceList);
 
-        // array list to store device data
-        final ArrayList<Devices> devices = new ArrayList<Devices>();
+        populateList();
 
+        //button listener
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), UnPairedActivity.class);
+                startActivity(i);
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                devices.clear();
+                populateList();
+            }
+        });
+
+        // Inflate the layout for this fragment
+        return rootView;
+    }
+
+    public void populateList () {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -116,6 +140,8 @@ public class AdminDeviceList extends Fragment {
                             device.setUserID(array.getJSONObject(i).getInt("user_id"));
                             devices.add(device);
                         }
+
+                        devicesArrayAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -128,30 +154,9 @@ public class AdminDeviceList extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         queue.add(loginRequest);
 
-
-        //button listener
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(), UnPairedActivity.class);
-                startActivity(i);
-            }
-        });
-
         // array adapter
         devicesArrayAdapter = new ArrayAdapter<Devices>(getActivity(), android.R.layout.simple_list_item_1, devices);
-        view.setAdapter(devicesArrayAdapter);
-
-        button2.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                onResume();
-            }
-        });
-
-        // Inflate the layout for this fragment
-        return rootView;
+        listView.setAdapter(devicesArrayAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

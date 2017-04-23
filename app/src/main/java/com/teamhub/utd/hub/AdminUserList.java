@@ -45,6 +45,7 @@ public class AdminUserList extends Fragment {
     ArrayAdapter<User> usersArrayAdapter;
     // make a list of user
     ArrayList<User> users = new ArrayList<User>();
+    ListView listView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -87,13 +88,13 @@ public class AdminUserList extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_admin_user_list, container, false);
         // button to do something
         FloatingActionButton button = (FloatingActionButton)rootView.findViewById(R.id.addUserButton);
         FloatingActionButton button2 = (FloatingActionButton)rootView.findViewById(R.id.userListRefresh);
         // list view to do something
-        ListView view = (ListView)rootView.findViewById(R.id.userList);
+        listView = (ListView)rootView.findViewById(R.id.userList);
 
         // populate list
         populateList();
@@ -107,9 +108,7 @@ public class AdminUserList extends Fragment {
             }
         });
 
-        view.setAdapter(usersArrayAdapter);
-
-        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), EditUserActivity.class);
@@ -125,7 +124,6 @@ public class AdminUserList extends Fragment {
             public void onClick(View view) {
                 users.clear();
                 populateList();
-                onResume();
             }
         });
 
@@ -156,6 +154,10 @@ public class AdminUserList extends Fragment {
                             users.add(user);
                             Log.e("UserList:", user.toString());
                         }
+
+                        // array adapter
+                        //usersArrayAdapter = new ArrayAdapter<User>(getActivity(), android.R.layout.simple_list_item_1, users);
+                        usersArrayAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -168,8 +170,8 @@ public class AdminUserList extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         queue.add(loginRequest);
 
-        // array adapter
         usersArrayAdapter = new ArrayAdapter<User>(getActivity(), android.R.layout.simple_list_item_1, users);
+        listView.setAdapter(usersArrayAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
