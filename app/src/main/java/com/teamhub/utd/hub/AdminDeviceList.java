@@ -1,12 +1,27 @@
 package com.teamhub.utd.hub;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 /**
@@ -63,8 +78,62 @@ public class AdminDeviceList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View rootView  = inflater.inflate(R.layout.fragment_admin_device_list, container, false);
+        // button to do something
+        FloatingActionButton button = (FloatingActionButton)rootView.findViewById(R.id.addButton);
+        // list view to do something
+        ListView view = (ListView)rootView.findViewById(R.id.deviceList);
+
+        // array list to store device data
+        final ArrayList<Devices> devices = new ArrayList<Devices>();
+
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JSONObject jsonResponse = null;
+                boolean success;
+                try {
+                    jsonResponse = new JSONObject(response);
+                    //success = jsonResponse.getBoolean("result");
+
+                    if (true) {
+                        JSONArray array = jsonResponse.getJSONArray("result");
+                        for (int i = 0; i < array.length(); i++) {
+                            Devices device = new Devices();
+                            device.setId(array.getJSONObject(i).getInt("id"));
+                            device.setName(array.getJSONObject(i).getString("device_name"));
+                            device.setMacaddress(array.getJSONObject(i).getString("mac_address"));
+                            device.setBatteryLife(array.getJSONObject(i).getInt("battery_level"));
+                            device.setUserID(array.getJSONObject(i).getInt("user_id"));
+                            devices.add(device);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        // call request
+        PopulateDevicesRequest loginRequest = new PopulateDevicesRequest(responseListener);
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(loginRequest);
+
+
+        //button listener
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), UnPairedActivity.class);
+                startActivity(i);
+            }
+        });
+
+        // array adapter
+        ArrayAdapter<Devices> devicesArrayAdapter = new ArrayAdapter<Devices>(getActivity(), android.R.layout.simple_list_item_1, devices);
+        view.setAdapter(devicesArrayAdapter);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_device_list, container, false);
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -74,8 +143,8 @@ public class AdminDeviceList extends Fragment {
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
+    //@Override
+    /*public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
@@ -83,7 +152,7 @@ public class AdminDeviceList extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
+    }*/
 
     @Override
     public void onDetach() {

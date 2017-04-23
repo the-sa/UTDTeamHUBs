@@ -1,7 +1,12 @@
 package com.teamhub.utd.hub;
 
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class User implements Serializable {
     int id;
     String username, password, role;
 
@@ -11,6 +16,8 @@ public class User {
         password = p;
         role = r;
     }
+
+    public void User () { }
 
     public int getId() {
         return id;
