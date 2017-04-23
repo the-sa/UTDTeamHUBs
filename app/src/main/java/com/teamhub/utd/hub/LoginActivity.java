@@ -48,10 +48,12 @@ public class LoginActivity extends AppCompatActivity {
                                 String passwordReturned = jsonResponse.getString("password");
                                 Integer roleReturned = jsonResponse.getInt("role");
                                 String idReturned = jsonResponse.getString("id");
+                                //log comments for validation. Okay to remove
                                 Log.e("username", usernameReturned);
                                 Log.e("password", passwordReturned);
                                 Log.e("id", idReturned);
                                 Log.e("role", roleReturned.toString());
+                                ///////
                                 if ((usernameReturned.contentEquals(username)) && (passwordReturned.equals(password))){
                                     if(roleReturned == 1){
                                         Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
