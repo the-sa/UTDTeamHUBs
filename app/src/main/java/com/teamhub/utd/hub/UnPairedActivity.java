@@ -1,12 +1,18 @@
 package com.teamhub.utd.hub;
 
 
+import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCallback;
+import android.bluetooth.BluetoothManager;
+import android.bluetooth.BluetoothProfile;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +43,7 @@ public class UnPairedActivity extends AppCompatActivity {
     private ArrayList<BluetoothDevice> bluetoothDeviceArrayList = new ArrayList<BluetoothDevice>();
 
 
+
     /*Reference for action bar buttons. Not appropriate for scan since it's not
     * being initialized at startup */
     /*
@@ -51,7 +58,7 @@ public class UnPairedActivity extends AppCompatActivity {
     /*
     - when a device is clicked, gets the mac address and sends it in Intent and closes the activity
      */
-    private AdapterView.OnItemClickListener mDeviceClickListener
+    public AdapterView.OnItemClickListener mDeviceClickListener
             = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -93,7 +100,9 @@ public class UnPairedActivity extends AppCompatActivity {
 
             b.putParcelable(unpaired, currentDevice);
             intent.putExtras(b);
+
             startActivity(intent);
+
             //intent.putExtra("MACADDRESS", address);
 
             //setResult(Activity.RESULT_OK, intent);
@@ -110,6 +119,7 @@ public class UnPairedActivity extends AppCompatActivity {
                 // object and its info from the Intent.
 
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
                 int RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
                 //skip if it's already paired
                 if(device.getBondState() != BluetoothDevice.BOND_BONDED) {
@@ -166,6 +176,12 @@ public class UnPairedActivity extends AppCompatActivity {
         bluetoothAdapter.startDiscovery();
     }
 
+    public void gettingIntent(){
+        Intent intent = getIntent();
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -207,6 +223,8 @@ public class UnPairedActivity extends AppCompatActivity {
         // Register for broadcasts when a device is discovered
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         this.registerReceiver(mReceiver, filter);
+        /*int rssi = this.getIntent().getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
+        String pairedStr = String.valueOf(rssi);*/
 
         // Register for broadcasts when discovery has finished
         filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
@@ -219,13 +237,27 @@ public class UnPairedActivity extends AppCompatActivity {
         Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
         Log.i("Hello",pairedDevices.size()+"");
 
+
+
+
+
+
+
+
+
         // If there are paired devices, add each one to the ArrayAdapter
         if (pairedDevices.size() > 0) {
             findViewById(R.id.paired_devices).setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
+                String pairedStr = "";
                 if(device != null) {
                     bluetoothDeviceArrayList.add(device);
+
+
+
+
                     pairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+
                 }
 
 

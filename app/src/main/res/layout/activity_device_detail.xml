@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.teamhub.utd.hub.DeviceDetailActivity">
+    tools:context="com.teamhub.utd.hub.DeviceDetailActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
 
     <Switch
@@ -13,7 +15,49 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/floatingActionButton2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="114dp"
-        android:text="Pair" />
+        android:text="Pair"
+        android:layout_marginStart="82dp"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="73dp"
+        app:layout_constraintTop_toBottomOf="@+id/signalStr"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/signalStr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Signal Strength"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="213dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/MacAddress"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/DeviceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Device Name"
+        android:layout_marginStart="82dp"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="76dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/MacAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mac Address"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/signalStr"
+        android:layout_marginTop="62dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="58dp"
+        app:layout_constraintLeft_toLeftOf="@+id/DeviceName"
+        app:layout_constraintTop_toTopOf="@+id/DeviceName" />
 
 </android.support.constraint.ConstraintLayout>
