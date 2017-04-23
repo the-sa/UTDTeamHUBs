@@ -81,5 +81,42 @@ public class EditUserActivity extends AppCompatActivity {
 
             }
         });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if (success) {
+                                Toast.makeText(EditUserActivity.this, "User Deleted",
+                                        Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(EditUserActivity.this, AdminActivity.class);
+                                EditUserActivity.this.startActivity(intent);
+                            } else {
+                                Toast.makeText(EditUserActivity.this, "User Deleted failure",
+                                        Toast.LENGTH_LONG).show();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(EditUserActivity.this);
+                                builder.setMessage("User Deleted Failed")
+                                        .setNegativeButton("Retry", null)
+                                        .create()
+                                        .show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                };
+
+                RemoveUserRequest removeUserRequest = new RemoveUserRequest(userID, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(EditUserActivity.this);
+                queue.add(removeUserRequest);
+            }
+        });
     }
 }
