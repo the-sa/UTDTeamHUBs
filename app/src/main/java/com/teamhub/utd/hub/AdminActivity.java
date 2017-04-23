@@ -1,6 +1,7 @@
 package com.teamhub.utd.hub;
 
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -83,7 +84,7 @@ public class AdminActivity extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -92,17 +93,20 @@ public class AdminActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
+            Fragment fragment = new Fragment();
             switch (position) {
                 case 0:
-                    AdminDeviceList view = new AdminDeviceList();
-                    return view;
+                    AdminDeviceList tab1 = new AdminDeviceList();
+                    fragment = tab1;
+                    break;
                 case 1:
-                    AdminUserList viewTwo = new AdminUserList();
-                    return viewTwo;
+                    AdminUserList tab2 = new AdminUserList();
+                    fragment = tab2;
+                    break;
             }
             // Return a PlaceholderFragment (defined as a static inner class below).
             //return PlaceholderFragment.newInstance(position + 1);
-            return null;
+            return fragment;
         }
 
         @Override

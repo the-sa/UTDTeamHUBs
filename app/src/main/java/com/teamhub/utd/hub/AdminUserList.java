@@ -78,7 +78,6 @@ public class AdminUserList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.e("UserList:", "I'm in");
         View rootView = inflater.inflate(R.layout.fragment_admin_user_list, container, false);
         // button to do something
         FloatingActionButton button = (FloatingActionButton)rootView.findViewById(R.id.addUserButton);
@@ -106,6 +105,7 @@ public class AdminUserList extends Fragment {
                             user.setPassword(array.getJSONObject(i).getString("password"));
                             user.setRole(array.getJSONObject(i).getInt("role"));
                             users.add(user);
+                            Log.e("UserList:", user.toString());
                         }
                     }
                 } catch (JSONException e) {
