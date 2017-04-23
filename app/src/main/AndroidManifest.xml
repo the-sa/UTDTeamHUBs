@@ -41,6 +41,7 @@
             android:name=".AdminActivity"
             android:label="Admin Dashboard"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".EditUserActivity"></activity>
     </application>
 
