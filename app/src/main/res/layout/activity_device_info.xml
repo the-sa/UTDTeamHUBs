@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.teamhub.utd.hub.DeviceInfoActivity">
+
+    <Button
+        android:id="@+id/deleteDevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="138dp"
+        android:visibility="invisible"
+        android:text="Delete"
+        android:layout_marginTop="81dp"
+        android:layout_alignTop="@+id/deviceSignal"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/deviceUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:text="TextView"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/deviceAddress" />
+
+    <TextView
+        android:id="@+id/deviceAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="63dp"
+        android:text="TextView"
+        android:layout_below="@+id/deviceUsername"
+        android:layout_alignStart="@+id/deviceBattery" />
+
+    <TextView
+        android:id="@+id/deviceBattery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/deviceAddress"
+        android:layout_marginTop="67dp"
+        android:text="TextView"
+        android:layout_alignStart="@+id/deviceSignal" />
+
+    <TextView
+        android:id="@+id/deviceSignal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginStart="15dp"
+        android:layout_below="@+id/deviceBattery"
+        android:layout_alignStart="@+id/deleteDevice"
+        android:layout_marginTop="51dp" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/deleteDevice"
+        android:layout_alignEnd="@+id/deviceSignal"
+        android:layout_marginBottom="23dp"
+        android:layout_marginEnd="43dp"
+        android:text="User ID:"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/deviceUserID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/deviceBattery"
+        android:layout_alignTop="@+id/textView8"
+        android:layout_marginStart="35dp"
+        android:text="" />
+</RelativeLayout>

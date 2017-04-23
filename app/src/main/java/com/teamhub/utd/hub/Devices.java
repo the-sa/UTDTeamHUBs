@@ -1,8 +1,9 @@
 package com.teamhub.utd.hub;
 
 
+import java.io.Serializable;
 
-public class Devices {
+public class Devices implements Serializable {
     int id;
     int batteryLife;
     int userID;

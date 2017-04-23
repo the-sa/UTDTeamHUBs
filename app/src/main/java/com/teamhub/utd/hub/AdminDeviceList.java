@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -112,6 +113,17 @@ public class AdminDeviceList extends Fragment {
             public void onClick(View view) {
                 devices.clear();
                 populateList();
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), DeviceInfoActivity.class);
+                Devices device = (Devices) adapterView.getItemAtPosition(i);
+                intent.putExtra("Device", device);
+                intent.putExtra("UserRole", 1);
+                startActivity(intent);
             }
         });
 
