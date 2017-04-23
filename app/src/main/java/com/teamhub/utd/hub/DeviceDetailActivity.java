@@ -18,7 +18,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_device_detail);
         final Switch pairSwitch = (Switch) findViewById(R.id.pairswitch);
 
         // button to do something

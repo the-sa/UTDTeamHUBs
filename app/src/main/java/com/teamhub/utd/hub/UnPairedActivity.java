@@ -1,13 +1,18 @@
 package com.teamhub.utd.hub;
 
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,12 +21,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Set;
 
 /*
-- need to get prompt for location permission
+
 - repurpose bluetooth switch
 - use a form field for device addition to access this activity so it can return address and set
 the field
@@ -30,12 +36,13 @@ the field
 public class UnPairedActivity extends AppCompatActivity {
 
     private final static String unpaired = "UNPAIRED_DEVICE";
+    private final static int LOCATION_RESPONSE = 8;
     BluetoothDevice currentDevice;
     BluetoothAdapter bluetoothAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
     //for Bluetooth
     private ArrayList<BluetoothDevice> bluetoothDeviceArrayList = new ArrayList<BluetoothDevice>();
-
+    private BluetoothAdapter bluetoothLeAdapter;
 
     /*Reference for action bar buttons. Not appropriate for scan since it's not
     * being initialized at startup */
@@ -60,44 +67,40 @@ public class UnPairedActivity extends AppCompatActivity {
 
 
             String info = ((TextView)view).getText().toString();
-            String address = info.substring(info.length()-17);
-            String name = info.substring(0,info.length()-18);
+
+            /*
+            check for no devices found
+            for aesthetic purposes, no devices found is added as an list item. This check insures
+            that nothing happens when it's clicked
+             */
+            if(info != (getResources().getText(R.string.no_devices).toString())) {
+                String address = info.substring(info.length() - 17);
+                String name = info.substring(0, info.length() - 18);
 
 
-            for (int a = 0; a< bluetoothDeviceArrayList.size(); a++)
-            {
-                //Log.d("TEST", name+name.length()+" gap "+bluetoothDeviceArrayList.get(a).getName()+bluetoothDeviceArrayList.get(a).getName().length());
-                if(address.equals(bluetoothDeviceArrayList.get(a).getAddress()))
-                {
+                for (int a = 0; a < bluetoothDeviceArrayList.size(); a++) {
+                    //Log.d("TEST", name+name.length()+" gap "+bluetoothDeviceArrayList.get(a).getName()+bluetoothDeviceArrayList.get(a).getName().length());
+                    if (address.equals(bluetoothDeviceArrayList.get(a).getAddress())) {
+                        Log.d("Test", bluetoothDeviceArrayList.get(a).getName());
+                        currentDevice = bluetoothDeviceArrayList.get(a);
 
-                    Log.d("Test", bluetoothDeviceArrayList.get(a).getName());
-
-                    currentDevice = bluetoothDeviceArrayList.get(a);
-
-
+                    } else {
+                        Log.d("not found", "");
+                    }
 
                 }
+                Intent intent = new Intent(UnPairedActivity.this, DeviceDetailActivity.class);
 
-                else
-                {
-                    Log.d("not found", "");
-                }
+                Bundle b = new Bundle();
 
+                b.putParcelable(unpaired, currentDevice);
+                intent.putExtras(b);
+                startActivity(intent);
+                //intent.putExtra("MACADDRESS", address);
+
+                //setResult(Activity.RESULT_OK, intent);
+                finish();
             }
-
-
-
-            Intent intent = new Intent(UnPairedActivity.this, DeviceDetailActivity.class);
-
-            Bundle b = new Bundle();
-
-            b.putParcelable(unpaired, currentDevice);
-            intent.putExtras(b);
-            startActivity(intent);
-            //intent.putExtra("MACADDRESS", address);
-
-            //setResult(Activity.RESULT_OK, intent);
-            finish();
         }
     };
 
@@ -166,16 +169,30 @@ public class UnPairedActivity extends AppCompatActivity {
         bluetoothAdapter.startDiscovery();
     }
 
+    /*
+    on create
+    initialize and create
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unpaired);
         // set up bluetooth adapter
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        final BluetoothManager bluetoothManager =
+                (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+
+        bluetoothAdapter = bluetoothManager.getAdapter();
 
 
         bluetoothOnOff();
 
+        /*
+        Prompt for location permissions
+         */
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            Log.w("UnpairedActivity", "Location access denied");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_RESPONSE);
+        }
         /*scan button for starting discovery */
         FloatingActionButton scanButton = (FloatingActionButton) findViewById(R.id.searchDevicesButton);
         if(scanButton != null){
@@ -185,6 +202,21 @@ public class UnPairedActivity extends AppCompatActivity {
                 }
             });
         }
+
+
+        /*
+        check to see if BLE is supported on this device
+         */
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Toast.makeText(this, R.string.no_ble, Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+        // Initializes a Bluetooth adapter.  For API level 18 and above, get a reference to
+        // BluetoothAdapter through BluetoothManager.
+
+        bluetoothLeAdapter = bluetoothManager.getAdapter();
+
 
         /*
         - New device array to store paired devices

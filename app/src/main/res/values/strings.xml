@@ -3,6 +3,7 @@
     <string name="paired_devices">Paired Devices</string>
     <string name="unpaired_devices">Other Available Devices</string>
     <string name="no_devices">No devices Found</string>
+    <string name="no_ble">No Ble devices found</string>
     <string name="title_activity_admin">AdminActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
