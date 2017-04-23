@@ -121,6 +121,7 @@ public class UnPairedActivity extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
                 int RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+                String RSSIVAL = String.valueOf(RSSI);
                 //skip if it's already paired
                 if(device.getBondState() != BluetoothDevice.BOND_BONDED) {
                     String deviceName = device.getName();
@@ -129,15 +130,15 @@ public class UnPairedActivity extends AppCompatActivity {
                     Log.i("Mac address:", deviceHardwareAddress + " " + deviceName);
                     //RSSI SIGNAL STRENGTH INFO//
                     if (RSSI >= -75 )
-                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: EXCELLENT");}
+                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: EXCELLENT: " +RSSIVAL);}
                     if (RSSI <= -70 && RSSI >= -85 )
-                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: GOOD");}
+                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: GOOD: "+RSSIVAL);}
                     if (RSSI <=-86 && RSSI>= -100 )
-                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: FAIR");}
+                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: FAIR: "+RSSIVAL);}
                     if (RSSI <= -100 && RSSI > -110 )
-                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: POOR");}
+                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: POOR: "+RSSIVAL);}
                     if (RSSI <= -110 )
-                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: NO SIGNAL");}
+                    {mNewDevicesArrayAdapter.add(deviceName+"\n"+deviceHardwareAddress+"\n" + "SIGNAL: NO SIGNAL: "+RSSIVAL);}
 
                     bluetoothDeviceArrayList.add(device);
                 }

@@ -59,5 +59,19 @@
         android:layout_marginBottom="58dp"
         app:layout_constraintLeft_toLeftOf="@+id/DeviceName"
         app:layout_constraintTop_toTopOf="@+id/DeviceName" />
+    <Button
+        android:id="@+id/AssignBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Assign"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/signalStr"
+        android:layout_marginTop="550dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="58dp"
+        app:layout_constraintLeft_toLeftOf="@+id/DeviceName"
+        app:layout_constraintTop_toTopOf="@+id/DeviceName" />
+        />
 
 </android.support.constraint.ConstraintLayout>

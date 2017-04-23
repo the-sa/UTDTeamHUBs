@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -28,10 +30,18 @@ public class DeviceDetailActivity extends AppCompatActivity {
         final TextView signalStrength = (TextView) findViewById(R.id.signalStr);
         final TextView DeviceName = (TextView) findViewById(R.id.DeviceName);
         final TextView MacAddress = (TextView) findViewById(R.id.MacAddress);
+        final Button AssignButton = (Button) findViewById(R.id.AssignBut);
 
 
 
+        AssignButton.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View v) {
+
+            }
+
+        });
         // button to do something
 
         Bundle b = this.getIntent().getExtras();
@@ -66,7 +76,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
             MacAddress.setText(MacAdresses);
 
             Intent intent = this.getIntent();
-            int  rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+            double rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
             String pairedStr = String.valueOf(rssi);
             signalStrength.setText(pairedStr);
             Log.d(" FOUND", "this");
