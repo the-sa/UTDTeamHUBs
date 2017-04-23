@@ -14,12 +14,13 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
     private final static String unpaired = "UNPAIRED_DEVICE";
     BluetoothDevice bluetoothDevice;
+    Switch pairSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        final Switch pairSwitch = (Switch) findViewById(R.id.pairswitch);
+        setContentView(R.layout.activity_device_detail);
+        pairSwitch = (Switch) findViewById(R.id.pairswitch);
 
         // button to do something
 

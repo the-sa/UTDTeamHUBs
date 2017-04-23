@@ -1,13 +1,17 @@
 package com.teamhub.utd.hub;
 
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +26,7 @@ import java.util.Set;
 
 /*
 - need to get prompt for location permission
-- repurpose bluetooth switch
+- re-purpose bluetooth switch
 - use a form field for device addition to access this activity so it can return address and set
 the field
  */
@@ -30,6 +34,7 @@ the field
 public class UnPairedActivity extends AppCompatActivity {
 
     private final static String unpaired = "UNPAIRED_DEVICE";
+    private static final int PERM_REQUEST_CODE = 8;
     BluetoothDevice currentDevice;
     BluetoothAdapter bluetoothAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
@@ -57,47 +62,49 @@ public class UnPairedActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             bluetoothAdapter.cancelDiscovery();
 
+            /*
+            Check for no devices found
+            For aesthetic purposes, no devices found is added as an item to the list.
+            The following checks if the user pressed an actual device or the no devices found item
+             */
 
 
             String info = ((TextView)view).getText().toString();
-            String address = info.substring(info.length()-17);
-            String name = info.substring(0,info.length()-18);
+            if(info != getResources().getText(R.string.no_devices)) {
 
 
-            for (int a = 0; a< bluetoothDeviceArrayList.size(); a++)
-            {
-                //Log.d("TEST", name+name.length()+" gap "+bluetoothDeviceArrayList.get(a).getName()+bluetoothDeviceArrayList.get(a).getName().length());
-                if(address.equals(bluetoothDeviceArrayList.get(a).getAddress()))
-                {
-
-                    Log.d("Test", bluetoothDeviceArrayList.get(a).getName());
-
-                    currentDevice = bluetoothDeviceArrayList.get(a);
+                String address = info.substring(info.length() - 17);
+                String name = info.substring(0, info.length() - 18);
 
 
+                for (int a = 0; a < bluetoothDeviceArrayList.size(); a++) {
+                    //Log.d("TEST", name+name.length()+" gap "+bluetoothDeviceArrayList.get(a).getName()+bluetoothDeviceArrayList.get(a).getName().length());
+                    if (address.equals(bluetoothDeviceArrayList.get(a).getAddress())) {
+
+                        Log.d("Test", bluetoothDeviceArrayList.get(a).getName());
+
+                        currentDevice = bluetoothDeviceArrayList.get(a);
+
+
+                    } else {
+                        Log.d("not found", "");
+                    }
 
                 }
 
-                else
-                {
-                    Log.d("not found", "");
-                }
 
+                Intent intent = new Intent(UnPairedActivity.this, DeviceDetailActivity.class);
+
+                Bundle b = new Bundle();
+
+                b.putParcelable(unpaired, currentDevice);
+                intent.putExtras(b);
+                startActivity(intent);
+                //intent.putExtra("MACADDRESS", address);
+
+                //setResult(Activity.RESULT_OK, intent);
+                finish();
             }
-
-
-
-            Intent intent = new Intent(UnPairedActivity.this, DeviceDetailActivity.class);
-
-            Bundle b = new Bundle();
-
-            b.putParcelable(unpaired, currentDevice);
-            intent.putExtras(b);
-            startActivity(intent);
-            //intent.putExtra("MACADDRESS", address);
-
-            //setResult(Activity.RESULT_OK, intent);
-            finish();
         }
     };
 
@@ -156,13 +163,19 @@ public class UnPairedActivity extends AppCompatActivity {
 
     /*start discovery*/
     public void doScanning(){
-        Log.i("START","I DID");
         /*stop scanning if already scanning*/
         if(bluetoothAdapter.isDiscovering()){
             bluetoothAdapter.cancelDiscovery();
         }
 
-        /*Request scanning*/
+        /*Request scanning
+        * location permissions
+        */
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            Log.w("UnpairedActivity", "Location access denied");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERM_REQUEST_CODE);
+        }
+
         bluetoothAdapter.startDiscovery();
     }
 
@@ -172,7 +185,6 @@ public class UnPairedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_unpaired);
         // set up bluetooth adapter
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
 
         bluetoothOnOff();
 
