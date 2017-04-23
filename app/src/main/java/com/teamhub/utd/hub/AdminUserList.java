@@ -139,7 +139,7 @@ public class AdminUserList extends Fragment {
                 Intent intent = new Intent(getActivity(), EditUserActivity.class);
                 User user = (User) adapterView.getItemAtPosition(i);
                 intent.putExtra("User", user);
-                Log.e("ClickedDevice", user.getId() + "");
+                //Log.e("ClickedDevice", String.valueOf(user.id));
                 startActivity(intent);
             }
         });

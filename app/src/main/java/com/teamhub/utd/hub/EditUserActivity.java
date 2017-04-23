@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,7 +40,8 @@ public class EditUserActivity extends AppCompatActivity {
 
         username.setText(user.getUsername());
         password.setText(user.getPassword());
-        role.setText(user.getRole());
+        role.setText(String.valueOf(user.getRole()));
+        final int userID = user.getId();
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +74,11 @@ public class EditUserActivity extends AppCompatActivity {
                     }
                 };
 
-                UpdateUserRequest updateUserRequest = new UpdateUserRequest(user.getId(), username.getText().toString(),
+                Log.e("Value:", username.getText().toString());
+                Log.e("Value:", password.getText().toString());
+                Log.e("Value:", role.getText().toString());
+
+                UpdateUserRequest updateUserRequest = new UpdateUserRequest(userID, username.getText().toString(),
                         password.getText().toString(), Integer.parseInt(role.getText().toString()), responseListener);
                 RequestQueue queue = Volley.newRequestQueue(EditUserActivity.this);
                 queue.add(updateUserRequest);

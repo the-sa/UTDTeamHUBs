@@ -7,10 +7,11 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    int id;
-    String username, password, role;
+    int id, role;
+    String username, password;
+    String stringRole;
 
-    public void User (int i, String u, String p, String r){
+    public void User (int i, String u, String p, int r){
         id = i;
         username = u;
         password = p;
@@ -27,17 +28,22 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getRole() {
+    public int getRole() {
         return role;
     }
 
     public void setRole(int role) {
+        this.role = role;
+        setRoleWord(role);
+    }
+
+    public void setRoleWord(int role) {
         if (role == 0) {
-            this.role = "normal";
+            this.stringRole = "normal";
         } else if (role == 1) {
-            this.role = "admin";
+            this.stringRole = "admin";
         } else {
-            this.role = "nothing";
+            this.stringRole = "nothing";
         }
     }
 
@@ -58,6 +64,6 @@ public class User implements Serializable {
     }
 
     public String toString () {
-        return username + "           role: " + role;
+        return username + "           role: " + stringRole;
     }
 }
