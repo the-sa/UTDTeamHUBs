@@ -56,12 +56,6 @@ public class DeviceDetailActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
-
     private void pairDevice(BluetoothDevice device) {
         try {
             Method method = device.getClass().getMethod("createBond", (Class[]) null);

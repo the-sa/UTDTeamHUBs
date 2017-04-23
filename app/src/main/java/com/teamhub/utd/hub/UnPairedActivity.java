@@ -2,6 +2,7 @@ package com.teamhub.utd.hub;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Set;
+import android.os.Handler;
 
 /*
 
@@ -38,12 +40,17 @@ public class UnPairedActivity extends AppCompatActivity {
     private final static String unpaired = "UNPAIRED_DEVICE";
     private final static int LOCATION_RESPONSE = 8;
     private final static int REQUEST_ENABLE_BT = 2;
+    private final static long SCAN_PERIOD = 10000;
+
     BluetoothDevice currentDevice;
     BluetoothAdapter bluetoothAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
     //for Bluetooth
     private ArrayList<BluetoothDevice> bluetoothDeviceArrayList = new ArrayList<BluetoothDevice>();
     private BluetoothAdapter bluetoothLeAdapter;
+    private boolean mScanning;
+    private Handler mHandler;
+
 
     /*Reference for action bar buttons. Not appropriate for scan since it's not
     * being initialized at startup */
@@ -171,6 +178,29 @@ public class UnPairedActivity extends AppCompatActivity {
     }
 
     /*
+    function to scan for BLE devices
+    Stops scanning after a pre-defined scan period.
+    */
+    private void doBleScanning(final boolean enable) {
+        if (enable) {
+
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mScanning = false;
+                    bluetoothAdapter.stopLeScan(mLeScanCallback);
+                }
+            }, SCAN_PERIOD);
+
+            mScanning = true;
+            bluetoothAdapter.startLeScan(mLeScanCallback);
+        } else {
+            mScanning = false;
+            bluetoothAdapter.stopLeScan(mLeScanCallback);
+        }
+    }
+
+    /*
     on create
     initialize and create
      */
@@ -277,7 +307,7 @@ public class UnPairedActivity extends AppCompatActivity {
      */
 
     @Override
-    protected void onResume() {
+    protected void onResume(){
         super.onResume();
 
         // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
@@ -288,7 +318,44 @@ public class UnPairedActivity extends AppCompatActivity {
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
         }
+
+        /*initialize le device list adapter */
+
     }
+
+    /*
+    handling for Bluetooth permission here
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // User chose not to enable Bluetooth.
+        if (requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_CANCELED) {
+            finish();
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    /*
+    Device scan callback
+     */
+
+    private BluetoothAdapter.LeScanCallback mLeScanCallback =
+            new BluetoothAdapter.LeScanCallback() {
+
+                @Override
+                public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            //mLeDeviceListAdapter.addDevice(device);
+                            //mLeDeviceListAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            };
 
     /*
          bluetooth on off switch.
