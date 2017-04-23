@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                     else{
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        intent.putExtra("UserID", jsonResponse.getInt("id"));
                                         LoginActivity.this.startActivity(intent);
                                     }
 

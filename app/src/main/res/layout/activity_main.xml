@@ -11,4 +11,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.teamhub.utd.hub.MainActivity">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/deviceUserList" />
 </RelativeLayout>

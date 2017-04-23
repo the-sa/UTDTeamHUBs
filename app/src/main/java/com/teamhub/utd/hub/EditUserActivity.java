@@ -74,10 +74,6 @@ public class EditUserActivity extends AppCompatActivity {
                     }
                 };
 
-                Log.e("Value:", username.getText().toString());
-                Log.e("Value:", password.getText().toString());
-                Log.e("Value:", role.getText().toString());
-
                 UpdateUserRequest updateUserRequest = new UpdateUserRequest(userID, username.getText().toString(),
                         password.getText().toString(), Integer.parseInt(role.getText().toString()), responseListener);
                 RequestQueue queue = Volley.newRequestQueue(EditUserActivity.this);
