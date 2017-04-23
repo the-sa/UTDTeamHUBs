@@ -2,6 +2,7 @@
     <string name="app_name">HUB</string>
     <string name="paired_devices">Paired Devices</string>
     <string name="unpaired_devices">Other Available Devices</string>
+    <string name="ble_devices">BLE Devices</string>
     <string name="no_devices">No devices Found</string>
     <string name="no_ble">No Ble devices found</string>
     <string name="title_activity_admin">AdminActivity</string>

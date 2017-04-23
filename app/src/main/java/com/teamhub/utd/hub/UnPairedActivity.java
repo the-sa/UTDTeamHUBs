@@ -37,6 +37,7 @@ public class UnPairedActivity extends AppCompatActivity {
 
     private final static String unpaired = "UNPAIRED_DEVICE";
     private final static int LOCATION_RESPONSE = 8;
+    private final static int REQUEST_ENABLE_BT = 2;
     BluetoothDevice currentDevice;
     BluetoothAdapter bluetoothAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
@@ -271,10 +272,27 @@ public class UnPairedActivity extends AppCompatActivity {
 
     }
 
+    /*
+
+     */
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
+        // fire an intent to display a dialog asking the user to grant permission to enable it.
+        if (!bluetoothLeAdapter.isEnabled()) {
+            if (!bluetoothLeAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            }
+        }
+    }
 
     /*
-     bluetooth on off switch.
-    */
+         bluetooth on off switch.
+        */
     private void bluetoothOnOff() {
         if (bluetoothAdapter == null) {
             Log.i("Error:", "Not working");
