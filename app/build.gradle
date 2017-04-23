@@ -1,5 +1,15 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    compile "com.github.movisens:SmartGattLib:1.7"
+}
+
+
 android {
     compileSdkVersion 24
     buildToolsVersion "25.0.1"

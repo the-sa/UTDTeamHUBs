@@ -14,8 +14,14 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.movisens.smartgattlib.Characteristic;
+import com.movisens.smartgattlib.Descriptor;
+import com.movisens.smartgattlib.characteristics.*;
+
+
 import java.util.List;
 import java.util.UUID;
+
 /**
  * Created by sa on 4/23/17.
  */
@@ -45,9 +51,14 @@ public class BluetoothLeService extends Service {
     public final static String EXTRA_DATA =
             "com.example.bluetooth.le.EXTRA_DATA";
 
+    private static final UUID Battery_Service_UUID = UUID.fromString("0000180F-0000-1000-8000-00805f9b34fb");
+    private static final UUID Battery_Level_UUID = UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb");
+
+
+    /*
     public final static UUID UUID_HEART_RATE_MEASUREMENT =
             UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
-
+    */
     // Various callback methods defined by the BLE API.
     private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
         @Override
@@ -108,7 +119,7 @@ public class BluetoothLeService extends Service {
 
         // This is special handling for the Heart Rate Measurement profile. Data
         // parsing is carried out as per profile specifications.
-        if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
+        if (Characteristic.HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
             int flag = characteristic.getProperties();
             int format = -1;
             if ((flag & 0x01) != 0) {
@@ -153,11 +164,11 @@ public class BluetoothLeService extends Service {
         // After using a given device, you should make sure that BluetoothGatt.close() is called
         // such that resources are cleaned up properly.  In this particular example, close() is
         // invoked when the UI is disconnected from the Service.
-        if (mBluetoothGatt == null) {
-            return;
+        if (mBluetoothGatt != null) {
+            mBluetoothGatt.close();
+            mBluetoothGatt = null;
         }
-        mBluetoothGatt.close();
-        mBluetoothGatt = null;
+
         return super.onUnbind(intent);
     }
 
@@ -209,5 +220,4 @@ public class BluetoothLeService extends Service {
 
         return mBluetoothGatt.getServices();
     }
-}
 }
