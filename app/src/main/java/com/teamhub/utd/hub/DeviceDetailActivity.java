@@ -38,6 +38,8 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                System.out.println("Hi Nikesh");
+                //Random Stuff
 
             }
 
