@@ -46,6 +46,7 @@
             android:label="Device Details"
             android:theme="@style/AppTheme" />
         <activity android:name=".EditUserActivity" />
+        <activity android:name=".DeviceInfoActivity" />
 
     </application>
 

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Method;
 
@@ -136,6 +137,8 @@ public class DeviceDetailActivity extends AppCompatActivity {
             Log.e("in pair", "yuh");
             Method method = device.getClass().getMethod("createBond", (Class[]) null);
             method.invoke(device, (Object[]) null);
+            Toast.makeText(DeviceDetailActivity.this, "Device is now pairing",
+                    Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,7 +148,8 @@ public class DeviceDetailActivity extends AppCompatActivity {
         try {
             Method method = device.getClass().getMethod("removeBond", (Class[]) null);
             method.invoke(device, (Object[]) null);
-
+            Toast.makeText(DeviceDetailActivity.this, "Device is now unpaired",
+                    Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
