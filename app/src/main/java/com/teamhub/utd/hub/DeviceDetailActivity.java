@@ -133,6 +133,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
     private void pairDevice(BluetoothDevice device) {
         try {
+            Log.e("in pair", "yuh");
             Method method = device.getClass().getMethod("createBond", (Class[]) null);
             method.invoke(device, (Object[]) null);
         } catch (Exception e) {
