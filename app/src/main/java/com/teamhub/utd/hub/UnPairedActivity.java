@@ -67,31 +67,26 @@ public class UnPairedActivity extends AppCompatActivity {
 
 
             String info = ((TextView)view).getText().toString();
-            String address = info.substring(info.length()-17);
-            String name = info.substring(0,info.length()-18);
+            Log.e("info", info);
+            //String address = info.substring(info.length()-17);
+            //String name = info.substring(0,info.length()-18);
+            String [] parsedInfo = info.split("\n");
 
 
             for (int a = 0; a< bluetoothDeviceArrayList.size(); a++)
             {
+                Log.e("String Address", parsedInfo[1]);
+               Log.e("List Address", bluetoothDeviceArrayList.get(a).getAddress());
                 //Log.d("TEST", name+name.length()+" gap "+bluetoothDeviceArrayList.get(a).getName()+bluetoothDeviceArrayList.get(a).getName().length());
-                if(address.equals(bluetoothDeviceArrayList.get(a).getAddress()))
+                if(parsedInfo[1].equals(bluetoothDeviceArrayList.get(a).getAddress()))
                 {
-
-                    Log.d("Test", bluetoothDeviceArrayList.get(a).getName());
-
+                    if (bluetoothDeviceArrayList.get(a).getName() != null){
+                        Log.d("Test", bluetoothDeviceArrayList.get(a).getName());
+                    }
                     currentDevice = bluetoothDeviceArrayList.get(a);
-
-
-
+                    break;
                 }
-
-                else
-                {
-                    Log.d("not found", "");
-                }
-
             }
-
 
 
             Intent intent = new Intent(UnPairedActivity.this, DeviceDetailActivity.class);
@@ -99,6 +94,7 @@ public class UnPairedActivity extends AppCompatActivity {
             Bundle b = new Bundle();
 
             b.putParcelable(unpaired, currentDevice);
+           // Log.i("current device", currentDevice.getName());
             intent.putExtras(b);
 
             startActivity(intent);

@@ -7,7 +7,7 @@ $statement = mysqli_query($con, "SELECT * FROM Device_Table WHERE user_id = '$us
 
 $response = mysqli_fetch_all($statement, MYSQLI_ASSOC);
 
-echo json_encode($response);
+echo json_encode(array("result"=>$response));
 
 mysqli_free_result($statement);
 
