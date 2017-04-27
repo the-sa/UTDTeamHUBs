@@ -36,10 +36,13 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
 
         AssignButton.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
-                System.out.println("Hi Nikesh");
+                Intent i = new Intent(DeviceDetailActivity.this, AddDeviceActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable("Device", bluetoothDevice);
+                i.putExtras(b);
+                startActivity(i);
                 //Random Stuff
 
             }

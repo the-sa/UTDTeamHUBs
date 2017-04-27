@@ -63,7 +63,7 @@
         android:id="@+id/AssignBut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Assign"
+        android:text="Add Device"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/signalStr"

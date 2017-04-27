@@ -59,7 +59,7 @@ public class Devices implements Serializable {
     }
 
     public String toString() {
-        return name + " " + batteryLife;
+        return "Device Name: " + name + "\t\t" + "Battery:" + batteryLife;
     }
 
 }

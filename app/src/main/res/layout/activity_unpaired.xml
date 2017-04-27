@@ -50,7 +50,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:clickable="true"
-        app:fabSize="mini"
         app:srcCompat="@android:drawable/ic_search_category_default" />
 
 </RelativeLayout>

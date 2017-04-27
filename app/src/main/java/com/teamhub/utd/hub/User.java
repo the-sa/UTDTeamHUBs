@@ -64,6 +64,6 @@ public class User implements Serializable {
     }
 
     public String toString () {
-        return username + "           role: " + stringRole;
+        return "ID:" + getId() + "\t\t " + username + "\t\trole: " + stringRole;
     }
 }

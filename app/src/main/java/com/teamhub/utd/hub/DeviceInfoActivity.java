@@ -35,18 +35,16 @@ public class DeviceInfoActivity extends AppCompatActivity {
         battery = (TextView) findViewById(R.id.deviceBattery);
         signal = (TextView) findViewById(R.id.deviceSignal);
         userID = (TextView) findViewById(R.id.deviceUserID);
-        userIDLable = (TextView) findViewById(R.id.textView8);
         delete = (Button) findViewById(R.id.deleteDevice);
 
         if (role == 1) {
             delete.setVisibility(View.VISIBLE);
-            userID.setText(device.getUserID()+"");
-            userIDLable.setVisibility(View.VISIBLE);
+            userID.setText("User ID: \t\t" + device.getUserID());
         }
 
-        name.setText(device.getName());
-        address.setText(device.getMacaddress());
-        battery.setText(device.getBatteryLife()+"");
+        name.setText("Device Name: \t\t" + device.getName());
+        address.setText("Mac Address: \t\t" + device.getMacaddress());
+        battery.setText("Battery: \t\t" + device.getBatteryLife());
         signal.setText("This is where signal will be displayed");
 
         delete.setOnClickListener(new View.OnClickListener() {

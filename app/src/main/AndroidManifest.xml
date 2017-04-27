@@ -47,7 +47,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".EditUserActivity" />
         <activity android:name=".DeviceInfoActivity" />
-
+        <activity android:name=".AddDeviceActivity"
+            android:label="Add Device"></activity>
     </application>
 
 </manifest>
