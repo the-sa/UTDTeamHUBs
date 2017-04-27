@@ -31,6 +31,9 @@ public class DeviceDetailActivity extends AppCompatActivity {
         final TextView signalStrength = (TextView) findViewById(R.id.signalStr);
         final TextView DeviceName = (TextView) findViewById(R.id.DeviceName);
         final TextView MacAddress = (TextView) findViewById(R.id.MacAddress);
+        final TextView signalTag= (TextView) findViewById(R.id.signalStr);
+        final TextView deviceTag= (TextView) findViewById(R.id.dname);
+        final TextView MACTag = (TextView) findViewById(R.id.madd);
         final Button AssignButton = (Button) findViewById(R.id.AssignBut);
 
 
@@ -40,10 +43,19 @@ public class DeviceDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(DeviceDetailActivity.this, AddDeviceActivity.class);
                 Bundle b = new Bundle();
-                b.putParcelable("Device", bluetoothDevice);
-                i.putExtras(b);
-                startActivity(i);
-                //Random Stuff
+                if(bluetoothDevice.getBondState()==BluetoothDevice.BOND_BONDED)
+                {
+                    b.putParcelable("Device", bluetoothDevice);
+                    i.putExtras(b);
+                    startActivity(i);
+                }
+                else
+                {
+                    Toast.makeText(DeviceDetailActivity.this, "Device needs to be paired before it can be added.",
+                            Toast.LENGTH_LONG).show();
+                }
+
+
 
             }
 
@@ -51,6 +63,8 @@ public class DeviceDetailActivity extends AppCompatActivity {
         // button to do something
 
         Bundle b = this.getIntent().getExtras();
+        Intent intent = getIntent();
+        //int intValue = intent.getIntExtra("hello", 0);
 
         //String DeviceNames=bluetoothDevice.getName();
 
@@ -74,6 +88,10 @@ public class DeviceDetailActivity extends AppCompatActivity {
         }
         if(bluetoothDevice !=null)
         {
+
+            deviceTag.setText("Device Name");
+            signalTag.setText("Signal Strength");
+            MACTag.setText("MAC Address");
             String DeviceNames = bluetoothDevice.getName();
             Log.d("Hi",DeviceNames);
             DeviceName.setText(DeviceNames);
@@ -81,7 +99,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
             String MacAdresses = bluetoothDevice.getAddress();
             MacAddress.setText(MacAdresses);
 
-            Intent intent = this.getIntent();
+
             double rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
             String pairedStr = String.valueOf(rssi);
             signalStrength.setText(pairedStr);

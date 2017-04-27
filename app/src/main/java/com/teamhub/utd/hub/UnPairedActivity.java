@@ -89,13 +89,20 @@ public class UnPairedActivity extends AppCompatActivity {
             }
 
 
+
             Intent intent = new Intent(UnPairedActivity.this, DeviceDetailActivity.class);
 
+            int RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+            String RSSIVAL = String.valueOf(RSSI);
+
             Bundle b = new Bundle();
+            Bundle rssi = new Bundle();
 
             b.putParcelable(unpaired, currentDevice);
+            rssi.putInt("hello", RSSI);
            // Log.i("current device", currentDevice.getName());
             intent.putExtras(b);
+            intent.putExtras(rssi);
 
             startActivity(intent);
 

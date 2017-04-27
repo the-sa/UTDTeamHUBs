@@ -1,72 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.teamhub.utd.hub.DeviceInfoActivity">
+    tools:context="com.teamhub.utd.hub.DeviceInfoActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
     <Button
         android:id="@+id/deleteDevice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="138dp"
         android:visibility="invisible"
         android:text="Delete"
-        android:layout_marginTop="81dp"
-        android:layout_alignTop="@+id/deviceSignal"
-        android:layout_alignParentStart="true" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="112dp" />
 
     <TextView
         android:id="@+id/deviceUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="57dp"
         android:text="TextView"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/deviceAddress"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginTop="50dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/deviceAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="63dp"
         android:text="TextView"
-        android:layout_below="@+id/deviceUsername"
-        android:layout_alignStart="@+id/deviceBattery"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginTop="34dp"
+        app:layout_constraintTop_toBottomOf="@+id/deviceUsername"
+        tools:layout_constraintLeft_creator="1" />
 
     <TextView
         android:id="@+id/deviceBattery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="53dp"
         android:text="TextView"
         android:textSize="20dp"
-        android:layout_below="@+id/deviceAddress"
-        android:layout_alignStart="@+id/deviceSignal" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginTop="37dp"
+        app:layout_constraintTop_toBottomOf="@+id/deviceAddress"
+        tools:layout_constraintLeft_creator="1" />
 
     <TextView
         android:id="@+id/deviceSignal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:layout_marginStart="15dp"
-        android:layout_below="@+id/deviceBattery"
-        android:layout_alignStart="@+id/deleteDevice"
-        android:layout_marginTop="51dp"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginTop="38dp"
+        app:layout_constraintTop_toBottomOf="@+id/deviceBattery"
+        tools:layout_constraintLeft_creator="1" />
 
 
     <TextView
         android:id="@+id/deviceUserID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/deviceBattery"
-        android:layout_marginStart="35dp"
         android:text=""
-        android:textSize="20dp"/>
+        android:textSize="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/deleteDevice"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="36dp" />
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

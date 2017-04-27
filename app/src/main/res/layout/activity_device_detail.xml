@@ -16,35 +16,34 @@
         android:layout_below="@+id/floatingActionButton2"
         android:layout_centerHorizontal="true"
         android:text="Pair"
-        android:layout_marginStart="82dp"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="73dp"
-        app:layout_constraintTop_toBottomOf="@+id/signalStr"
+        android:layout_marginStart="19dp"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/AssignBut"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_marginBottom="38dp"
+        app:layout_constraintLeft_toLeftOf="@+id/AssignBut" />
 
     <TextView
         android:id="@+id/signalStr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Signal Strength"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="213dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/ss"
+        tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/MacAddress"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@+id/MacAddress" />
 
     <TextView
         android:id="@+id/DeviceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Device Name"
-        android:layout_marginStart="82dp"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="76dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="71dp"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/madd" />
 
     <TextView
         android:id="@+id/MacAddress"
@@ -52,26 +51,56 @@
         android:layout_height="wrap_content"
         android:text="Mac Address"
         tools:layout_constraintTop_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/signalStr"
-        android:layout_marginTop="62dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintTop_toBottomOf="@+id/DeviceName"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="58dp"
-        app:layout_constraintLeft_toLeftOf="@+id/DeviceName"
-        app:layout_constraintTop_toTopOf="@+id/DeviceName" />
+        app:layout_constraintLeft_toLeftOf="@+id/DeviceName" />
     <Button
         android:id="@+id/AssignBut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Device"
-        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/signalStr"
-        android:layout_marginTop="550dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="58dp"
-        app:layout_constraintLeft_toLeftOf="@+id/DeviceName"
-        app:layout_constraintTop_toTopOf="@+id/DeviceName" />
-        />
+        android:layout_marginBottom="156dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
+    <TextView
+        android:id="@+id/dname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Device Name"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/madd"
+        app:layout_constraintBaseline_toBaselineOf="@+id/MacAddress"
+        tools:layout_constraintBaseline_creator="1" />
+
+    <TextView
+        android:id="@+id/madd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MAC Address"
+        android:layout_marginStart="75dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/DeviceName"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/ss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Signal Strength"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/dname"
+        android:layout_marginTop="37dp"
+        app:layout_constraintTop_toBottomOf="@+id/dname" /><![CDATA[
+
+    />
+
+]]>
 </android.support.constraint.ConstraintLayout>
