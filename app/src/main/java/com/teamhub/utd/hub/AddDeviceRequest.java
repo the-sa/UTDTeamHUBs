@@ -17,7 +17,9 @@ public class AddDeviceRequest extends StringRequest {
         params.put("macAddress", macAddress);
         params.put("user_id", String.valueOf(user_id));
     }
-
+//Comment
+    //Hi this is a comment to push
+    //This is request for adding devices
     @Override
     public Map<String, String> getParams() {
         return params;
