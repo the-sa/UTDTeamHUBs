@@ -27,19 +27,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".UnPairedActivity"
             android:label="Bluetooth Devices"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".NotificationActivity"
+            android:label="Notifications"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".MainActivity"
-            android:label="User Dashboard"
+            android:label="Main"
             android:theme="@style/AppTheme" />
+
         <activity
             android:name=".RegisterActivity"
             android:label="Add New User"
             android:theme="@style/AppTheme" />
+
         <activity
             android:name=".AdminActivity"
             android:label="Admin Dashboard"
@@ -53,6 +60,12 @@
         <activity android:name=".DeviceInfoActivity" />
         <activity android:name=".AddDeviceActivity"
             android:label="Add Device"></activity>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Do it!"
+            android:id="@+id/button"
+            android:onClick="sendNotification"/>
     </application>
 
 </manifest>

@@ -1,14 +1,12 @@
 package com.teamhub.utd.hub;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
@@ -20,20 +18,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
 /*
     This is the normal User Activity.
  */
 
+
 public class MainActivity extends AppCompatActivity {
 
     ArrayAdapter<Devices> devicesArrayAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Intent intent = getIntent();
         int user_id = intent.getIntExtra("UserID", 0);
 
@@ -41,8 +37,13 @@ public class MainActivity extends AppCompatActivity {
 
         ListView list = (ListView) findViewById(R.id.deviceUserList);
         FloatingActionButton button = (FloatingActionButton) findViewById(R.id.deviceRefrest);
-
+        FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.icon);
         Response.Listener<String> responseListener = new Response.Listener<String>() {
+
+
+
+
+
             @Override
             public void onResponse(String response) {
                 JSONObject jsonResponse = null;
@@ -85,7 +86,12 @@ public class MainActivity extends AppCompatActivity {
                 onResume();
             }
         });
-
+        btn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        //sendNotification(view);
+    }
+});
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -104,4 +110,7 @@ public class MainActivity extends AppCompatActivity {
         devicesArrayAdapter.notifyDataSetChanged();
 
     }
+
+
+
 }

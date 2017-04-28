@@ -49,11 +49,13 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:fontFamily="sans-serif"
+        android:text="RBM"
+        android:textAlignment="center"
+        android:textSize="80sp"
+        android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:fontFamily="cursive"
-        android:text="RBDM"
-        android:textSize="45sp"
-        android:textStyle="bold" />
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

@@ -17,4 +17,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="RBM" parent="AppTheme" >
+        <item name="android:colorForeground">@color/foreground_material_light</item>
+        <item name="android:colorBackground">@android:color/background_light</item>
+    </style>
+
 </resources>
