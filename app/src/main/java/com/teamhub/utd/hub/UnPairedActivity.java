@@ -46,8 +46,8 @@ public class UnPairedActivity extends AppCompatActivity {
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
     //for Bluetooth
     private ArrayList<BluetoothDevice> bluetoothDeviceArrayList = new ArrayList<BluetoothDevice>();
-
-
+    int RSSI;
+    private final static int MY_PERMISSION_RESPONSE = 2;
 
     /*Reference for action bar buttons. Not appropriate for scan since it's not
     * being initialized at startup */
