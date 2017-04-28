@@ -16,6 +16,7 @@
         android:id="@+id/deviceUserList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/deviceRefrest" />
 
     <android.support.design.widget.FloatingActionButton

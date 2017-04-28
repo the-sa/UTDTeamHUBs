@@ -26,19 +26,64 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    final ArrayList<Devices> devices = new ArrayList<Devices>();
+    ListView list;
+    int user_id;
+
     ArrayAdapter<Devices> devicesArrayAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
-        int user_id = intent.getIntExtra("UserID", 0);
+        user_id = intent.getIntExtra("UserID", 0);
 
         final ArrayList<Devices> devices = new ArrayList<Devices>();
 
-        ListView list = (ListView) findViewById(R.id.deviceUserList);
+        list = (ListView) findViewById(R.id.deviceUserList);
         FloatingActionButton button = (FloatingActionButton) findViewById(R.id.deviceRefrest);
         FloatingActionButton btn = (FloatingActionButton) findViewById(R.id.icon);
+
+        populateList();
+
+        btn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        //sendNotification(view);
+    }
+});
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, DeviceInfoActivity.class);
+                Devices device = (Devices) parent.getItemAtPosition(position);
+                intent.putExtra("Device", device);
+                intent.putExtra("UserRole", 0);
+                startActivity(intent);
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                devices.clear();
+                devicesArrayAdapter.clear();
+                populateList();
+            }
+        });
+
+        //checking if logged in user's devices are less then 25% of battery left
+//        for(int i = 0; i <= devices.size(); i++){
+//            if((devices.get(i).getBatteryLife() > 0) && (devices.get(i).getBatteryLife() <= 25)){
+//                Toast.makeText(MainActivity.this, "Device: " + devices.get(i).getName() + "has only "
+//                        + devices.get(i).getBatteryLife() + " left.",
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        }
+
+    }
+
+    public void populateList () {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
 
 
@@ -64,7 +109,10 @@ public class MainActivity extends AppCompatActivity {
                             device.setUserID(array.getJSONObject(i).getInt("user_id"));
                             devices.add(device);
                         }
+
+                        devicesArrayAdapter.notifyDataSetChanged();
                     }
+
                     for(int j = 0; j < devices.size(); j++){
                         if((devices.get(j).getBatteryLife() > 0) && (devices.get(j).getBatteryLife() <= 25)){
                             Toast.makeText(MainActivity.this, "Device: " + devices.get(j).getName() + "has only "
@@ -72,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.LENGTH_LONG).show();
                         }
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -87,39 +136,6 @@ public class MainActivity extends AppCompatActivity {
         devicesArrayAdapter = new ArrayAdapter<Devices>(MainActivity.this, android.R.layout.simple_list_item_1, devices);
         list.setAdapter(devicesArrayAdapter);
         list.invalidate();
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onResume();
-            }
-        });
-        btn.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        //sendNotification(view);
-    }
-});
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, DeviceInfoActivity.class);
-                Devices device = (Devices) parent.getItemAtPosition(position);
-                intent.putExtra("Device", device);
-                intent.putExtra("UserRole", 0);
-                startActivity(intent);
-            }
-        });
-
-        //checking if logged in user's devices are less then 25% of battery left
-//        for(int i = 0; i <= devices.size(); i++){
-//            if((devices.get(i).getBatteryLife() > 0) && (devices.get(i).getBatteryLife() <= 25)){
-//                Toast.makeText(MainActivity.this, "Device: " + devices.get(i).getName() + "has only "
-//                        + devices.get(i).getBatteryLife() + " left.",
-//                        Toast.LENGTH_LONG).show();
-//            }
-//        }
-
     }
 
     @Override
