@@ -162,6 +162,7 @@ public class BLEActivity extends ActionBarActivity {
         if (mGatt == null) {
             return;
         }
+        disconnect();
         mGatt.close();
         mGatt = null;
 
@@ -290,9 +291,11 @@ public class BLEActivity extends ActionBarActivity {
 
 
                 if (device != null) {
-
                     mGatt = device.connectGatt(getApplicationContext(), false, gattCallback);
                     scanLeDevice(false);// will stop after first device detection
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Device not found", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -343,12 +346,12 @@ public class BLEActivity extends ActionBarActivity {
 
                     gatt.discoverServices();
                     break;
+
                 case BluetoothProfile.STATE_DISCONNECTED:
                     Log.e("gattCallback", "STATE_DISCONNECTED");
                     Log.i("gattCallback", "reconnecting...");
                     mDevice = gatt.getDevice();
                     mGatt = null;
-
                     connectToDevice(mDevice.getAddress().toString());
                     break;
                 default:
@@ -414,17 +417,21 @@ public class BLEActivity extends ActionBarActivity {
                 Log.d("THE FORM", "  UINT8.");
             }
             batterylevel = characteristic.getIntValue(format, 0);
+            Message msg = Message.obtain();
+            msg.obj = Integer.toString(batterylevel);
+            msg.what = 1;
+            msg.setTarget(uiHandler);
+            msg.sendToTarget();
             Log.i("THE BATTERY",batterylevel+"");
+            /*
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     updateValue(batterylevel+"");
-                    if(mGatt != null) {
-                        mGatt.disconnect();
-                    }
+                    disconnect();
                 }
             });
-
+            */
 
 
         }
@@ -460,8 +467,13 @@ public class BLEActivity extends ActionBarActivity {
 
             //gatt.disconnect();
         }
-
-
-
     };
+
+    public void disconnect() {
+        if (mBluetoothAdapter == null || mGatt == null) {
+            return;
+        }
+        mGatt.disconnect();
+    }
+
 }
