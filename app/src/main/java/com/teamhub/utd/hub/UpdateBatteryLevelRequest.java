@@ -14,10 +14,10 @@ public class UpdateBatteryLevelRequest extends StringRequest {
     private static final String REGISTER_REQUEST_URL = "http://hueless-discharge.000webhostapp.com/UpdateBatteryLevel.php";
     private Map<String, String> params;
 
-    public UpdateBatteryLevelRequest(int id,int battery_level, Response.Listener<String> listener) {
+    public UpdateBatteryLevelRequest(String mac_address,int battery_level, Response.Listener<String> listener) {
         super(Method.POST, REGISTER_REQUEST_URL, listener, null);
         params = new HashMap<>();
-        params.put("id", String.valueOf(id));
+        params.put("mac_address", mac_address);
         params.put("battery_level", String.valueOf(battery_level));
     }
 

@@ -2,10 +2,10 @@
 $con = mysqli_connect("localhost", "id1379182_database", "vdci2017", "id1379182_bluetoothmanagementdevice");
 
 
-$id = $_POST["id"];
+$mac_address = $_POST["mac_address"];
 $battery_level = $_POST["battery_level"];
 
-$query = "UPDATE Device_Table SET battery_level = '$battery_level' WHERE id = '$id'";
+$query = "UPDATE Device_Table SET battery_level = '$battery_level' WHERE mac_address = '$mac_address'";
 
 mysqli_query($con, $query);
 
