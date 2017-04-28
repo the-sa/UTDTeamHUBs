@@ -167,6 +167,7 @@ public class AdminDeviceList extends Fragment {
         queue.add(loginRequest);
 
         // array adapter
+
         devicesArrayAdapter = new ArrayAdapter<Devices>(getActivity(), android.R.layout.simple_list_item_1, devices);
         listView.setAdapter(devicesArrayAdapter);
     }

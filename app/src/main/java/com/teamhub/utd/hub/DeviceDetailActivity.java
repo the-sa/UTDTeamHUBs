@@ -107,7 +107,15 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
             //double rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
             //String pairedStr = String.valueOf(rssi);
-            signalStrength.setText(rssi+"");
+            Log.d("Bluetooth", String.valueOf(rssi));
+            if(bluetoothDevice.getBondState()==BluetoothDevice.BOND_BONDED)
+            {
+                signalStrength.setText("Not available");
+
+            }
+            else {
+                signalStrength.setText(rssi + "");
+            }
             Log.d(" FOUND", "this");
 
             if (bluetoothDevice.getBondState() == BluetoothDevice.BOND_BONDED) {
@@ -181,22 +189,5 @@ public class DeviceDetailActivity extends AppCompatActivity {
         }
     }
 
-    /*private final BroadcastReceiver mPairReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
-                final int state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
-                final int prevState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
-
-                if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
-                    Toast.makeText(MainActivity.this, "Paired", Toast.LENGTH_LONG).show();
-                } else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED) {
-                    Toast.makeText(MainActivity.this, "Unpaired", Toast.LENGTH_LONG).show();
-                }
-
-            }
-        }
-    };*/
 
 }
