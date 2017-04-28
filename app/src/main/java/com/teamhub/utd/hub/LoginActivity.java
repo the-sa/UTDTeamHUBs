@@ -2,10 +2,12 @@ package com.teamhub.utd.hub;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText etUsername = (EditText) findViewById(R.id.editUsername);
         final EditText etPassword = (EditText) findViewById(R.id.editPassword);
         final Button bLogin = (Button) findViewById(R.id.bSignIn);
+        etPassword.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
 
         bLogin.setOnClickListener(new View.OnClickListener() {

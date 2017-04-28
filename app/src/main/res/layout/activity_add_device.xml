@@ -45,5 +45,7 @@
         android:layout_below="@+id/maView"
         android:layout_alignStart="@+id/maView"
         android:layout_marginTop="32dp"
-        android:layout_alignEnd="@+id/maView" />
+        android:layout_alignEnd="@+id/maView"
+        android:inputType="phone"
+        android:imeOptions="actionDone"/>
 </RelativeLayout>

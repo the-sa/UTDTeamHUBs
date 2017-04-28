@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import android.view.View;
 
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -39,6 +40,7 @@ public class AddDeviceActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.dName);
         address = (TextView) findViewById(R.id.maView);
         userID = (EditText) findViewById(R.id.userid);
+        userID.setImeOptions(EditorInfo.IME_ACTION_DONE);
         add = (Button) findViewById(R.id.button4);
 
         if (bluetoothDevice.getName() == null) {
