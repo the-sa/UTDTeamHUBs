@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class UnPairedActivity extends AppCompatActivity {
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
     //for Bluetooth
     private ArrayList<BluetoothDevice> bluetoothDeviceArrayList = new ArrayList<BluetoothDevice>();
+    int RSSI;
 
 
 
@@ -92,17 +94,17 @@ public class UnPairedActivity extends AppCompatActivity {
 
             Intent intent = new Intent(UnPairedActivity.this, DeviceDetailActivity.class);
 
-            int RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
-            String RSSIVAL = String.valueOf(RSSI);
+            //RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+            //String RSSIVAL = String.valueOf(RSSI);
 
-            Bundle b = new Bundle();
-            Bundle rssi = new Bundle();
+            //Bundle b = new Bundle();
+            //Bundle rssi = new Bundle();
 
-            b.putParcelable(unpaired, currentDevice);
-            rssi.putInt("hello", RSSI);
+            intent.putExtra(unpaired, currentDevice);
+            intent.putExtra("rssi", RSSI);
            // Log.i("current device", currentDevice.getName());
-            intent.putExtras(b);
-            intent.putExtras(rssi);
+           // intent.putExtras(b);
+            //intent.putExtras(rssi);
 
             startActivity(intent);
 
@@ -123,7 +125,7 @@ public class UnPairedActivity extends AppCompatActivity {
 
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
-                int RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+                RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
                 String RSSIVAL = String.valueOf(RSSI);
                 //skip if it's already paired
                 if(device.getBondState() != BluetoothDevice.BOND_BONDED) {

@@ -64,6 +64,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
 
         Bundle b = this.getIntent().getExtras();
         Intent intent = getIntent();
+        int rssi = intent.getIntExtra("rssi", 0);
         //int intValue = intent.getIntExtra("hello", 0);
 
         //String DeviceNames=bluetoothDevice.getName();
@@ -78,7 +79,7 @@ public class DeviceDetailActivity extends AppCompatActivity {
         if(b != null)
         {
 
-            bluetoothDevice = b.getParcelable(unpaired);
+            bluetoothDevice = intent.getParcelableExtra(unpaired);
             /*if(bluetoothDevice.getBondState() == BluetoothDevice.BOND_NONE){
                 String unPairName = bluetoothDevice.getName();
 
@@ -89,20 +90,24 @@ public class DeviceDetailActivity extends AppCompatActivity {
         if(bluetoothDevice !=null)
         {
 
-            deviceTag.setText("Device Name");
+            deviceTag.setText("MAC Address");
             signalTag.setText("Signal Strength");
-            MACTag.setText("MAC Address");
-            String DeviceNames = bluetoothDevice.getName();
-            Log.d("Hi",DeviceNames);
-            DeviceName.setText(DeviceNames);
+            MACTag.setText("Device Name ");
+            //String DeviceNames = bluetoothDevice.getName();
+            //Log.d("Hi",DeviceNames);
+            if (bluetoothDevice.getName() == null) {
+                DeviceName.setText("null");
+            } else {
+                DeviceName.setText(bluetoothDevice.getName());
+            }
 
             String MacAdresses = bluetoothDevice.getAddress();
             MacAddress.setText(MacAdresses);
 
 
-            double rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
-            String pairedStr = String.valueOf(rssi);
-            signalStrength.setText(pairedStr);
+            //double rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+            //String pairedStr = String.valueOf(rssi);
+            signalStrength.setText(rssi+"");
             Log.d(" FOUND", "this");
 
             if (bluetoothDevice.getBondState() == BluetoothDevice.BOND_BONDED) {
