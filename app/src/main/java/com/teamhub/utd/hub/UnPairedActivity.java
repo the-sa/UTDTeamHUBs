@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -46,8 +45,9 @@ public class UnPairedActivity extends AppCompatActivity {
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
     //for Bluetooth
     private ArrayList<BluetoothDevice> bluetoothDeviceArrayList = new ArrayList<BluetoothDevice>();
-    int RSSI;
-    private final static int MY_PERMISSION_RESPONSE = 2;
+    private static final int MY_PERMISSION_RESPONSE = 2;
+
+
 
     /*Reference for action bar buttons. Not appropriate for scan since it's not
     * being initialized at startup */
@@ -95,17 +95,17 @@ public class UnPairedActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(UnPairedActivity.this, DeviceDetailActivity.class);
 
-            //RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
-            //String RSSIVAL = String.valueOf(RSSI);
+                int RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
+                String RSSIVAL = String.valueOf(RSSI);
 
-            //Bundle b = new Bundle();
-            //Bundle rssi = new Bundle();
+                Bundle b = new Bundle();
+                Bundle rssi = new Bundle();
 
-            intent.putExtra(unpaired, currentDevice);
-            intent.putExtra("rssi", RSSI);
-           // Log.i("current device", currentDevice.getName());
-           // intent.putExtras(b);
-            //intent.putExtras(rssi);
+                b.putParcelable(unpaired, currentDevice);
+                rssi.putInt("hello", RSSI);
+                // Log.i("current device", currentDevice.getName());
+                intent.putExtras(b);
+                intent.putExtras(rssi);
 
                 startActivity(intent);
 
@@ -128,7 +128,7 @@ public class UnPairedActivity extends AppCompatActivity {
 
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
-                RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+                int RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
                 String RSSIVAL = String.valueOf(RSSI);
                 //skip if it's already paired
                 if(device.getBondState() != BluetoothDevice.BOND_BONDED) {

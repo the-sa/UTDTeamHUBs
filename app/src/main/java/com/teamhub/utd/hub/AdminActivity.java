@@ -1,5 +1,6 @@
 package com.teamhub.utd.hub;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
@@ -74,7 +75,9 @@ public class AdminActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.ble_devices_activity) {
+            Intent intent = new Intent(this, BLEActivity.class);
+            startActivity(intent);
             return true;
         }
 
