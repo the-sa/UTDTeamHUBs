@@ -46,7 +46,7 @@ public class UnPairedActivity extends AppCompatActivity {
     //for Bluetooth
     private ArrayList<BluetoothDevice> bluetoothDeviceArrayList = new ArrayList<BluetoothDevice>();
     private static final int MY_PERMISSION_RESPONSE = 2;
-
+    int RSSI;
 
 
     /*Reference for action bar buttons. Not appropriate for scan since it's not
@@ -95,17 +95,17 @@ public class UnPairedActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(UnPairedActivity.this, DeviceDetailActivity.class);
 
-                int RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
-                String RSSIVAL = String.valueOf(RSSI);
+            //RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+            //String RSSIVAL = String.valueOf(RSSI);
 
-                Bundle b = new Bundle();
-                Bundle rssi = new Bundle();
+            //Bundle b = new Bundle();
+            //Bundle rssi = new Bundle();
 
-                b.putParcelable(unpaired, currentDevice);
-                rssi.putInt("hello", RSSI);
-                // Log.i("current device", currentDevice.getName());
-                intent.putExtras(b);
-                intent.putExtras(rssi);
+            intent.putExtra(unpaired, currentDevice);
+            intent.putExtra("rssi", RSSI);
+           // Log.i("current device", currentDevice.getName());
+           // intent.putExtras(b);
+            //intent.putExtras(rssi);
 
                 startActivity(intent);
 
@@ -128,7 +128,7 @@ public class UnPairedActivity extends AppCompatActivity {
 
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
-                int RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
+                RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
                 String RSSIVAL = String.valueOf(RSSI);
                 //skip if it's already paired
                 if(device.getBondState() != BluetoothDevice.BOND_BONDED) {
