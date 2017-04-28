@@ -49,7 +49,7 @@ public class BLEActivity extends ActionBarActivity {
     private BluetoothAdapter mBluetoothAdapter;
     private int REQUEST_ENABLE_BT = 1;
     private Handler mHandler;
-    private static final long SCAN_PERIOD = 30000;
+    private static final long SCAN_PERIOD = 10000;
     private BluetoothLeScanner mLEScanner;
     private ScanSettings settings;
     private List<ScanFilter> filters;
@@ -223,7 +223,6 @@ public class BLEActivity extends ActionBarActivity {
             connectToDevice(device.getAddress().toString());
             updateDevice(device.getName());
             updateValue("-");
-
             //String info = ((TextView)view).getText().toString();
             //Log.i("INfo",info+i);
         }
@@ -420,8 +419,9 @@ public class BLEActivity extends ActionBarActivity {
                 @Override
                 public void run() {
                     updateValue(batterylevel+"");
-                    mGatt.disconnect();
-
+                    if(mGatt != null) {
+                        mGatt.disconnect();
+                    }
                 }
             });
 
