@@ -141,9 +141,11 @@ public class BLEActivity extends ActionBarActivity {
             case R.id.scan_devices:
                 scanLeDevice(true);
                 return true;
+            /*
             case R.id.stop_scan_devices:
                 scanLeDevice(false);
                 return true;
+                */
         }
         return super.onOptionsItemSelected(item);
     }
@@ -154,6 +156,11 @@ public class BLEActivity extends ActionBarActivity {
         if (mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()) {
             scanLeDevice(false);
         }
+        disconnect();
+        if(mGatt != null) {
+            mGatt.close();
+        }
+        mGatt = null;
     }
 
     @Override
@@ -163,7 +170,9 @@ public class BLEActivity extends ActionBarActivity {
             return;
         }
         disconnect();
-        mGatt.close();
+        if (mGatt != null){
+            mGatt.close();
+        }
         mGatt = null;
 
     }
@@ -417,8 +426,9 @@ public class BLEActivity extends ActionBarActivity {
                 Log.d("THE FORM", "  UINT8.");
             }
             batterylevel = characteristic.getIntValue(format, 0);
+
             Message msg = Message.obtain();
-            msg.obj = Integer.toString(batterylevel);
+            msg.obj = batterylevel+"%";
             msg.what = 1;
             msg.setTarget(uiHandler);
             msg.sendToTarget();
