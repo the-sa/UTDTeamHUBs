@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -64,6 +65,13 @@ public class MainActivity extends AppCompatActivity {
                             devices.add(device);
                         }
                     }
+                    for(int j = 0; j < devices.size(); j++){
+                        if((devices.get(j).getBatteryLife() > 0) && (devices.get(j).getBatteryLife() <= 25)){
+                            Toast.makeText(MainActivity.this, "Device: " + devices.get(j).getName() + "has only "
+                                            + devices.get(j).getBatteryLife() + " left.",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -102,6 +110,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //checking if logged in user's devices are less then 25% of battery left
+//        for(int i = 0; i <= devices.size(); i++){
+//            if((devices.get(i).getBatteryLife() > 0) && (devices.get(i).getBatteryLife() <= 25)){
+//                Toast.makeText(MainActivity.this, "Device: " + devices.get(i).getName() + "has only "
+//                        + devices.get(i).getBatteryLife() + " left.",
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        }
+
     }
 
     @Override

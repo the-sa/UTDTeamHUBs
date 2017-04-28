@@ -13,9 +13,10 @@
 
 
     <ListView
+        android:id="@+id/deviceUserList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/deviceUserList" />
+        android:layout_toStartOf="@+id/deviceRefrest" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/deviceRefrest"
@@ -26,8 +27,17 @@
         android:layout_gravity="end|bottom"
         android:clickable="true"
         app:srcCompat="@android:drawable/stat_notify_sync_noanim"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="18dp" />
+        android:layout_marginTop="66dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/deviceUserList"
+        android:clickable="true"
+        app:srcCompat="@drawable/new_add" />
+
 </RelativeLayout>

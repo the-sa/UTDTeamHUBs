@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText etPassword = (EditText) findViewById(R.id.editPassword);
         final Button bLogin = (Button) findViewById(R.id.bSignIn);
         etPassword.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        etUsername.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
 
         bLogin.setOnClickListener(new View.OnClickListener() {
