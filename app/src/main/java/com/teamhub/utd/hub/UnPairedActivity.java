@@ -1,6 +1,7 @@
 package com.teamhub.utd.hub;
 
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -12,9 +13,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,7 +46,6 @@ public class UnPairedActivity extends AppCompatActivity {
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
     //for Bluetooth
     private ArrayList<BluetoothDevice> bluetoothDeviceArrayList = new ArrayList<BluetoothDevice>();
-    int RSSI;
 
 
 
@@ -74,25 +77,23 @@ public class UnPairedActivity extends AppCompatActivity {
             //String name = info.substring(0,info.length()-18);
             String [] parsedInfo = info.split("\n");
 
-
-            for (int a = 0; a< bluetoothDeviceArrayList.size(); a++)
-            {
-                Log.e("String Address", parsedInfo[1]);
-               Log.e("List Address", bluetoothDeviceArrayList.get(a).getAddress());
-                //Log.d("TEST", name+name.length()+" gap "+bluetoothDeviceArrayList.get(a).getName()+bluetoothDeviceArrayList.get(a).getName().length());
-                if(parsedInfo[1].equals(bluetoothDeviceArrayList.get(a).getAddress()))
-                {
-                    if (bluetoothDeviceArrayList.get(a).getName() != null){
-                        Log.d("Test", bluetoothDeviceArrayList.get(a).getName());
+            //Added here
+            if(!info.equals(getResources().getText(R.string.no_devices).toString())) {
+                for (int a = 0; a < bluetoothDeviceArrayList.size(); a++) {
+                    Log.e("String Address", parsedInfo[1]);
+                    Log.e("List Address", bluetoothDeviceArrayList.get(a).getAddress());
+                    //Log.d("TEST", name+name.length()+" gap "+bluetoothDeviceArrayList.get(a).getName()+bluetoothDeviceArrayList.get(a).getName().length());
+                    if (parsedInfo[1].equals(bluetoothDeviceArrayList.get(a).getAddress())) {
+                        if (bluetoothDeviceArrayList.get(a).getName() != null) {
+                            Log.d("Test", bluetoothDeviceArrayList.get(a).getName());
+                        }
+                        currentDevice = bluetoothDeviceArrayList.get(a);
+                        break;
                     }
-                    currentDevice = bluetoothDeviceArrayList.get(a);
-                    break;
                 }
-            }
 
 
-
-            Intent intent = new Intent(UnPairedActivity.this, DeviceDetailActivity.class);
+                Intent intent = new Intent(UnPairedActivity.this, DeviceDetailActivity.class);
 
             //RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI,Short.MIN_VALUE);
             //String RSSIVAL = String.valueOf(RSSI);
@@ -106,12 +107,14 @@ public class UnPairedActivity extends AppCompatActivity {
            // intent.putExtras(b);
             //intent.putExtras(rssi);
 
-            startActivity(intent);
+                startActivity(intent);
 
-            //intent.putExtra("MACADDRESS", address);
+                //intent.putExtra("MACADDRESS", address);
 
-            //setResult(Activity.RESULT_OK, intent);
-            finish();
+                //setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+            Log.i("Went here","");
         }
     };
 
@@ -148,9 +151,7 @@ public class UnPairedActivity extends AppCompatActivity {
                     bluetoothDeviceArrayList.add(device);
                 }
             }
-            else{
-                Log.i("NOT FOUND HERE", "This");
-            }
+
         }
     };
 
@@ -172,7 +173,12 @@ public class UnPairedActivity extends AppCompatActivity {
 
     /*start discovery*/
     public void doScanning(){
-        Log.i("START","I DID");
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED){
+            Log.w("BleActivity", "Location access not granted!");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    MY_PERMISSION_RESPONSE);
+        }
         /*stop scanning if already scanning*/
         if(bluetoothAdapter.isDiscovering()){
             bluetoothAdapter.cancelDiscovery();
@@ -258,10 +264,6 @@ public class UnPairedActivity extends AppCompatActivity {
                 String pairedStr = "";
                 if(device != null) {
                     bluetoothDeviceArrayList.add(device);
-
-
-
-
                     pairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
 
                 }
